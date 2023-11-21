@@ -1,0 +1,10 @@
+Microsoft Chart Controls for .NET Framework (WinForms): As mentioned earlier, Microsoft Chart Controls are available for WinForms applications as well. You can use the System.Windows.Forms.DataVisualization.Charting namespace to integrate these controls into your WinForms projects.
+
+OxyPlot (WinForms): OxyPlot supports WinForms, and you can use it to create a wide range of charts in your Windows Forms applications.
+It's easy to use and provides good customization options.
+
+LiveCharts (WinForms): LiveCharts is compatible with WinForms and offers real-time chart updates. You can create various types of charts and integrate them into your WinForms applications.
+
+Syncfusion Essential Chart for WinForms (Community License): Syncfusion's Essential Studio for WinForms includes a charting control, and they offer a free Community License with limitations. It can be a good option if you're working on WinForms projects and don't require advanced features.
+
+ScottPlot (WinForms): ScottPlot is suitable for WinForms applications and is designed for interactive and real-time data visualization. It's particularly useful for scientific and engineering applications.
