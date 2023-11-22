@@ -29,7 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormEditDataView));
-            textBoxSQLText = new TextBox();
             splitContainerHoriz = new SplitContainer();
             dataGridViewResults = new DataGridView();
             splitContainerVert = new SplitContainer();
@@ -42,8 +41,8 @@
             toolStripSeparator1 = new ToolStripSeparator();
             toolStripButtonRun = new ToolStripButton();
             toolStripButtonStop = new ToolStripButton();
+            statusStrip1 = new StatusStrip();
             ((System.ComponentModel.ISupportInitialize)splitContainerHoriz).BeginInit();
-            splitContainerHoriz.Panel1.SuspendLayout();
             splitContainerHoriz.Panel2.SuspendLayout();
             splitContainerHoriz.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridViewResults).BeginInit();
@@ -54,18 +53,6 @@
             toolStripHeader.SuspendLayout();
             SuspendLayout();
             // 
-            // textBoxSQLText
-            // 
-            textBoxSQLText.Dock = DockStyle.Fill;
-            textBoxSQLText.Location = new Point(0, 0);
-            textBoxSQLText.Multiline = true;
-            textBoxSQLText.Name = "textBoxSQLText";
-            textBoxSQLText.ScrollBars = ScrollBars.Both;
-            textBoxSQLText.Size = new Size(633, 375);
-            textBoxSQLText.TabIndex = 0;
-            textBoxSQLText.Text = resources.GetString("textBoxSQLText.Text");
-            textBoxSQLText.WordWrap = false;
-            // 
             // splitContainerHoriz
             // 
             splitContainerHoriz.Dock = DockStyle.Fill;
@@ -75,13 +62,13 @@
             // 
             // splitContainerHoriz.Panel1
             // 
-            splitContainerHoriz.Panel1.Controls.Add(textBoxSQLText);
+            splitContainerHoriz.Panel1.Padding = new Padding(5);
             // 
             // splitContainerHoriz.Panel2
             // 
             splitContainerHoriz.Panel2.Controls.Add(dataGridViewResults);
-            splitContainerHoriz.Size = new Size(633, 596);
-            splitContainerHoriz.SplitterDistance = 375;
+            splitContainerHoriz.Size = new Size(633, 574);
+            splitContainerHoriz.SplitterDistance = 361;
             splitContainerHoriz.TabIndex = 1;
             // 
             // dataGridViewResults
@@ -92,7 +79,7 @@
             dataGridViewResults.GridColor = SystemColors.Control;
             dataGridViewResults.Location = new Point(0, 0);
             dataGridViewResults.Name = "dataGridViewResults";
-            dataGridViewResults.Size = new Size(633, 217);
+            dataGridViewResults.Size = new Size(633, 209);
             dataGridViewResults.TabIndex = 1;
             // 
             // splitContainerVert
@@ -108,7 +95,8 @@
             // splitContainerVert.Panel2
             // 
             splitContainerVert.Panel2.Controls.Add(listViewFields);
-            splitContainerVert.Size = new Size(1027, 596);
+            splitContainerVert.Panel2.Padding = new Padding(2);
+            splitContainerVert.Size = new Size(1027, 574);
             splitContainerVert.SplitterDistance = 633;
             splitContainerVert.TabIndex = 2;
             // 
@@ -120,9 +108,9 @@
             listViewFields.FullRowSelect = true;
             listViewFields.GridLines = true;
             listViewFields.LabelEdit = true;
-            listViewFields.Location = new Point(0, 0);
+            listViewFields.Location = new Point(2, 2);
             listViewFields.Name = "listViewFields";
-            listViewFields.Size = new Size(390, 596);
+            listViewFields.Size = new Size(386, 570);
             listViewFields.TabIndex = 1;
             listViewFields.UseCompatibleStateImageBehavior = false;
             listViewFields.View = View.Details;
@@ -184,6 +172,14 @@
             toolStripButtonStop.Size = new Size(23, 22);
             toolStripButtonStop.Text = "Stop";
             // 
+            // statusStrip1
+            // 
+            statusStrip1.Location = new Point(0, 599);
+            statusStrip1.Name = "statusStrip1";
+            statusStrip1.Size = new Size(1027, 22);
+            statusStrip1.TabIndex = 2;
+            statusStrip1.Text = "statusStrip1";
+            // 
             // FormEditDataView
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -191,10 +187,10 @@
             ClientSize = new Size(1027, 621);
             Controls.Add(splitContainerVert);
             Controls.Add(toolStripHeader);
+            Controls.Add(statusStrip1);
             Name = "FormEditDataView";
             Text = "FormMain";
-            splitContainerHoriz.Panel1.ResumeLayout(false);
-            splitContainerHoriz.Panel1.PerformLayout();
+            Load += FormEditDataView_Load;
             splitContainerHoriz.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)splitContainerHoriz).EndInit();
             splitContainerHoriz.ResumeLayout(false);
@@ -210,8 +206,6 @@
         }
 
         #endregion
-
-        private TextBox textBoxSQLText;
         private SplitContainer splitContainerHoriz;
         private SplitContainer splitContainerVert;
         private ListView listViewFields;
@@ -224,5 +218,6 @@
         private ToolStripButton toolStripButtonRun;
         private ToolStripButton toolStripButtonStop;
         private DataGridView dataGridViewResults;
+        private StatusStrip statusStrip1;
     }
 }

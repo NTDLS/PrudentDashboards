@@ -10,7 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Documents", "Documents", "{
 		Charts.txt = Charts.txt
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Library", "Library\Library.csproj", "{4FC93787-A043-414F-9166-31EB32C1535F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Library", "Library\Library.csproj", "{4FC93787-A043-414F-9166-31EB32C1535F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

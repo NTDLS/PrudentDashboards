@@ -59,5 +59,14 @@ namespace UI.Properties {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        internal static string MSSQLSyntaxHighlighter {
+            get {
+                return ResourceManager.GetString("MSSQLSyntaxHighlighter", resourceCulture);
+            }
+        }
     }
 }

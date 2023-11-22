@@ -117,22 +117,6 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="textBoxSQLText.Text" xml:space="preserve">
-    <value>select
-	ST.[Name] as [SalesTerritory],
-	ST.[CountryRegionCode] as [Country],
-	ST.[Group] as [Region],
-	SOH.OrderDate,
-	SOH.TotalDue,
-	SOH.Freight,
-	SOH.TaxAmt,
-	SOH.SubTotal
-from
-	[Sales].[SalesOrderHeader] as SOH
-INNER JOIN [Sales].[SalesTerritory] as ST
-	ON ST.TerritoryID = SOH.TerritoryID
-</value>
-  </data>
   <metadata name="toolStripHeader.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
@@ -154,11 +138,11 @@ INNER JOIN [Sales].[SalesTerritory] as ST
   <data name="toolStripButtonRun.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADXSURBVDhPY6AJuPT4TCeUSR6ImxE398Ljk11QLukgYUbC
+        YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAADWSURBVDhPY6AJuPT4TCeUSR6ImxE398Ljk11QLukgYUbC
         fYcKg/sX7h27AhUiDSTMCLi/4caC/yBDzt4/fhkqTDzw7/d/XnCg4D/MkDP3jxyAShEH/FscwAaAcMKC
-        gP82JQYvzt49sg4qTRg41Ds8K9iQANbs0GDw36BA4b90CtdHqDRhYFBv8AJZM1cCw8fL146vhEoTBgZF
-        Cu+QNZ+7cmgFVIo4IF0g/RGm+czFvcuhwsQDkH9Bmk+e20G6ZhAQiBc4fezUliYol3Rw8PjGRihz0AMG
-        BgA2AWr9rxuCxgAAAABJRU5ErkJggg==
+        gP82JQYvzt49sg4qTRg41Ds8K9iQANbs0GDw36BA4b90CudHqDRhYFBv8AJZM2cCw8fL146vhEoTBkBN
+        75A1n7tyaAVUijggXSD9Eab5zMW9y6HCxAOQf0GaT57bQbpmEBCIFzh97NSWJiiXdHDw+MZGKHPQAwYG
+        ACk1avV8KEWIAAAAAElFTkSuQmCC
 </value>
   </data>
   <data name="toolStripButtonStop.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -172,4 +156,7 @@ INNER JOIN [Sales].[SalesTerritory] as ST
         8LaBf5kgWAPp/eRXX+5QLAAAAABJRU5ErkJggg==
 </value>
   </data>
+  <metadata name="statusStrip1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>154, 17</value>
+  </metadata>
 </root>
