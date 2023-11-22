@@ -1,4 +1,6 @@
-﻿namespace PrudentDashboards.UI
+﻿using Library.ManagedConnectivity;
+
+namespace PrudentDashboards.UI
 {
     public partial class FormProgress : Form
     {
@@ -26,7 +28,7 @@
         {
             while (IsLoaded == false)
             {
-                System.Threading.Thread.Sleep(10);
+                Thread.Sleep(10);
             }
         }
 
@@ -136,10 +138,29 @@
             return result;
         }
 
+        public new void Close()
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => Close()));
+            }
+            else
+            {
+                base.Close();
+            }
+        }
+
         public void Close(DialogResult result)
         {
-            DialogResult = result;
-            Close();
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => Close(result)));
+            }
+            else
+            {
+                DialogResult = result;
+                base.Close();
+            }
         }
 
         private void Timer_Tick(object? sender, EventArgs e)

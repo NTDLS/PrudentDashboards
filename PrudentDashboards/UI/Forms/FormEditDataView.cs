@@ -2,6 +2,7 @@
 using ICSharpCode.AvalonEdit.Highlighting;
 using ICSharpCode.AvalonEdit.Highlighting.Xshd;
 using Library.ManagedConnectivity;
+using PrudentDashboards.UI;
 using System.Data.SqlClient;
 using System.Windows.Forms.Integration;
 using System.Xml;
@@ -71,24 +72,35 @@ namespace UI
 
             string sqlText = $"SELECT TOP 100 * FROM ({_editor.Text}) as dq";
 
-            var thread = new Thread(() =>
+            using (var formProgress = new FormProgress())
             {
-                using var connection = new ManagedConnection(_connectionBuilder);
-                using var reader = connection.ExecuteReader(sqlText);
-
-                foreach (var field in reader.Fields)
+                var thread = new Thread(() =>
                 {
-                    AddTypeToList(field);
-                    AddGridColumn(field.Name);
-                }
+                    formProgress.WaitForLoaded();
 
-                foreach (var row in reader)
-                {
-                    var values = new List<string>();
-                    row.ToList().ForEach(o => values.Add($"{o}"));
-                    AddGridRow(values);
-                }
-            });
+                    using var connection = new ManagedConnection(_connectionBuilder);
+                    using var reader = connection.ExecuteReader(sqlText);
+
+                    foreach (var field in reader.Fields)
+                    {
+                        AddTypeToList(field);
+                        AddGridColumn(field.Name);
+                    }
+
+                    foreach (var row in reader)
+                    {
+                        var values = new List<string>();
+                        row.ToList().ForEach(o => values.Add($"{o}"));
+                        AddGridRow(values);
+                    }
+
+                    formProgress.Close();
+                });
+
+                thread.Start();
+
+                formProgress.ShowDialog();
+            }
 
             void AddTypeToList(ManagedField managedField)
             {
@@ -128,8 +140,6 @@ namespace UI
                     dataGridViewResults.Columns.Add(name, name);
                 }
             }
-
-            thread.Start();
         }
 
         private void toolStripButtonRun_Click(object sender, EventArgs e)
