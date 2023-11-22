@@ -12,7 +12,7 @@ namespace UI
     public partial class FormEditDataView : Form
     {
         private SqlConnectionStringBuilder _connectionBuilder;
-        private TextEditor _editor;
+        private readonly TextEditor _editor;
 
         public FormEditDataView()
         {
