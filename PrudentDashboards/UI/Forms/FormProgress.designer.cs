@@ -57,7 +57,7 @@ namespace PrudentDashboards.UI
             cmdCancel.TabIndex = 1;
             cmdCancel.Text = "Cancel";
             cmdCancel.UseVisualStyleBackColor = true;
-            cmdCancel.Click += cmdCancel_Click;
+            cmdCancel.Click += CmdCancel_Click;
             // 
             // pbProgress
             // 

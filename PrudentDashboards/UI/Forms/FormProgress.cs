@@ -1,12 +1,10 @@
-﻿using Library.ManagedConnectivity;
+﻿using Library;
 
 namespace PrudentDashboards.UI
 {
     public partial class FormProgress : Form
     {
-        public volatile bool IsLoaded = false;
-        private System.Windows.Forms.Timer _timer = new();
-
+        public bool IsVisible { get; private set; } = false;
         public class ProgressFormStatus
         {
             public string Caption { get; set; } = string.Empty;
@@ -24,9 +22,9 @@ namespace PrudentDashboards.UI
             }
         }
 
-        public void WaitForLoaded()
+        public void WaitForVisible()
         {
-            while (IsLoaded == false)
+            while (IsVisible == false)
             {
                 Thread.Sleep(10);
             }
@@ -57,7 +55,7 @@ namespace PrudentDashboards.UI
             DialogResult = DialogResult.OK;
         }
 
-        private void cmdCancel_Click(object? sender, EventArgs e)
+        private void CmdCancel_Click(object? sender, EventArgs e)
         {
             if (OnCancel != null)
             {
@@ -124,30 +122,15 @@ namespace PrudentDashboards.UI
         }
         #endregion
 
-        public DialogResult ShowDialog(int timeoutMs)
-        {
-            _timer = new();
-            _timer.Tick += Timer_Tick;
-            _timer.Interval = timeoutMs;
-            _timer.Start();
-
-            DialogResult result = ShowDialog();
-
-            _timer.Stop();
-
-            return result;
-        }
 
         public new void Close()
         {
             if (InvokeRequired)
             {
                 Invoke(new Action(() => Close()));
+                return;
             }
-            else
-            {
-                base.Close();
-            }
+            base.Close();
         }
 
         public void Close(DialogResult result)
@@ -155,22 +138,21 @@ namespace PrudentDashboards.UI
             if (InvokeRequired)
             {
                 Invoke(new Action(() => Close(result)));
+                return;
             }
-            else
-            {
-                DialogResult = result;
-                base.Close();
-            }
-        }
-
-        private void Timer_Tick(object? sender, EventArgs e)
-        {
-            DialogResult = DialogResult.Cancel;
-            Close();
+            DialogResult = result;
+            base.Close();
         }
 
         public void UpdateStatus(ProgressFormStatus? status)
         {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => UpdateStatus(status)));
+                return;
+            }
+
+
             if (status != null)
             {
                 if (status.Caption != null)
@@ -207,7 +189,7 @@ namespace PrudentDashboards.UI
 
         private void FormProgress_Shown(object? sender, EventArgs e)
         {
-            IsLoaded = true;
+            IsVisible = true;
         }
     }
 }

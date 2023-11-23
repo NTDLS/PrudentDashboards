@@ -76,7 +76,7 @@ namespace UI
             {
                 var thread = new Thread(() =>
                 {
-                    formProgress.WaitForLoaded();
+                    formProgress.WaitForVisible();
 
                     using var connection = new ManagedConnection(_connectionBuilder);
                     using var reader = connection.ExecuteReader(sqlText);
@@ -89,9 +89,7 @@ namespace UI
 
                     foreach (var row in reader)
                     {
-                        var values = new List<string>();
-                        row.ToList().ForEach(o => values.Add($"{o}"));
-                        AddGridRow(values);
+                        AddGridRow(row.Select(r => r.ToString()).ToList());
                     }
 
                     formProgress.Close();
@@ -117,7 +115,7 @@ namespace UI
                 }
             }
 
-            void AddGridRow(List<string> values)
+            void AddGridRow(List<string?> values)
             {
                 if (dataGridViewResults.InvokeRequired)
                 {
