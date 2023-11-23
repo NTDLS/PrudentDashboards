@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.CodeAnalysis;
+﻿using NTDLS.NASCCL;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Security.Principal;
@@ -59,6 +60,11 @@ namespace Library
 
             return builder.ToString();
         }
+
+        public static NASCCLStream GetEncryptionProvider()
+        {
+            return new(GetCurrentuserEncryptionKey());
+        }        
 
         public static string GetCurrentuserEncryptionKey()
         {
