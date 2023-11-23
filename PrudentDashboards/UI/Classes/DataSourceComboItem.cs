@@ -4,9 +4,9 @@ namespace UI.Classes
 {
     internal class DataSourceComboItem
     {
-        public DataSource DataSource { get; set; }
+        public DataSourceModel DataSource { get; set; }
 
-        public DataSourceComboItem(DataSource dataSource)
+        public DataSourceComboItem(DataSourceModel dataSource)
         {
             DataSource = dataSource;
         }

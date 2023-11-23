@@ -5,7 +5,7 @@ namespace UI.Forms
 {
     public partial class FormDataSourceViewCollection : Form
     {
-        private readonly DataSourceCollection _dataSources = DataSourceCollection.Load();
+        private readonly DataSourceModelCollection _dataSources = DataSourceModelCollection.Load();
 
         public FormDataSourceViewCollection()
         {
@@ -14,9 +14,9 @@ namespace UI.Forms
             listViewDataViews.MouseDoubleClick += (object? sender, MouseEventArgs e) => EditSelectedItem();
         }
 
-        private void FormDataViews_Load(object sender, EventArgs e)
+        private void FormDataSourceViewCollection_Load(object sender, EventArgs e)
         {
-            foreach (var dataView in DataSourceViewCollection.Load())
+            foreach (var dataView in DataSourceViewModelCollection.Load())
             {
                 var dataSourcename = _dataSources.Where(o => o.Id == dataView.DataSourceId).Select(o => o.Name).FirstOrDefault();
 
@@ -29,12 +29,12 @@ namespace UI.Forms
 
         private void SaveGrid()
         {
-            var dataViews = new DataSourceViewCollection();
+            var dataViews = new DataSourceViewModelCollection();
 
             foreach (ListViewItem item in listViewDataViews.Items)
             {
                 Utility.EnsureNotNull(item.Tag);
-                dataViews.Add((DataSourceView)item.Tag);
+                dataViews.Add((DataSourceViewModel)item.Tag);
             }
 
             dataViews.Save();
@@ -67,7 +67,7 @@ namespace UI.Forms
 
             var selectedItem = listViewDataViews.SelectedItems[0];
 
-            var dataView = selectedItem.Tag as DataSourceView;
+            var dataView = selectedItem.Tag as DataSourceViewModel;
             Utility.EnsureNotNull(dataView);
 
             using (var formDataView = new FormDataSourceView(dataView))

@@ -1,6 +1,6 @@
 ﻿namespace UI
 {
-    partial class FormDataSourceView
+    partial class FormChart
     {
         /// <summary>
         /// Required designer variable.
@@ -28,28 +28,29 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormDataSourceView));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormChart));
             splitContainerHoriz = new SplitContainer();
+            listDataViewFields = new ListView();
+            columnHeaderName = new ColumnHeader();
+            columnHeaderType = new ColumnHeader();
             dataGridViewResults = new DataGridView();
             splitContainerVert = new SplitContainer();
+            plotView = new OxyPlot.WindowsForms.PlotView();
             panel1 = new Panel();
-            comboBoxDataSource = new ComboBox();
+            comboBoxDataSourceView = new ComboBox();
             labelDatasource = new Label();
             labelDescription = new Label();
             labelName = new Label();
             textBoxDescription = new TextBox();
             textBoxName = new TextBox();
-            listViewFields = new ListView();
-            columnHeaderAlias = new ColumnHeader();
-            columnHeaderName = new ColumnHeader();
-            columnHeaderType = new ColumnHeader();
             toolStripHeader = new ToolStrip();
             toolStripButtonSave = new ToolStripButton();
             toolStripSeparator1 = new ToolStripSeparator();
-            toolStripButtonRun = new ToolStripButton();
+            toolStripButtonRefresh = new ToolStripButton();
             toolStripButtonStop = new ToolStripButton();
             statusStrip1 = new StatusStrip();
             ((System.ComponentModel.ISupportInitialize)splitContainerHoriz).BeginInit();
+            splitContainerHoriz.Panel1.SuspendLayout();
             splitContainerHoriz.Panel2.SuspendLayout();
             splitContainerHoriz.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridViewResults).BeginInit();
@@ -64,20 +65,46 @@
             // splitContainerHoriz
             // 
             splitContainerHoriz.Dock = DockStyle.Fill;
-            splitContainerHoriz.Location = new Point(0, 113);
+            splitContainerHoriz.Location = new Point(2, 2);
             splitContainerHoriz.Name = "splitContainerHoriz";
             splitContainerHoriz.Orientation = Orientation.Horizontal;
             // 
             // splitContainerHoriz.Panel1
             // 
+            splitContainerHoriz.Panel1.Controls.Add(listDataViewFields);
             splitContainerHoriz.Panel1.Padding = new Padding(5);
             // 
             // splitContainerHoriz.Panel2
             // 
             splitContainerHoriz.Panel2.Controls.Add(dataGridViewResults);
-            splitContainerHoriz.Size = new Size(650, 461);
-            splitContainerHoriz.SplitterDistance = 289;
+            splitContainerHoriz.Size = new Size(328, 570);
+            splitContainerHoriz.SplitterDistance = 252;
             splitContainerHoriz.TabIndex = 1;
+            // 
+            // listDataViewFields
+            // 
+            listDataViewFields.CheckBoxes = true;
+            listDataViewFields.Columns.AddRange(new ColumnHeader[] { columnHeaderName, columnHeaderType });
+            listDataViewFields.Dock = DockStyle.Fill;
+            listDataViewFields.FullRowSelect = true;
+            listDataViewFields.GridLines = true;
+            listDataViewFields.LabelEdit = true;
+            listDataViewFields.Location = new Point(5, 5);
+            listDataViewFields.Name = "listDataViewFields";
+            listDataViewFields.Size = new Size(318, 242);
+            listDataViewFields.TabIndex = 1;
+            listDataViewFields.UseCompatibleStateImageBehavior = false;
+            listDataViewFields.View = View.Details;
+            // 
+            // columnHeaderName
+            // 
+            columnHeaderName.Text = "Name";
+            columnHeaderName.Width = 200;
+            // 
+            // columnHeaderType
+            // 
+            columnHeaderType.Text = "Type";
+            columnHeaderType.Width = 100;
             // 
             // dataGridViewResults
             // 
@@ -87,7 +114,7 @@
             dataGridViewResults.GridColor = SystemColors.Control;
             dataGridViewResults.Location = new Point(0, 0);
             dataGridViewResults.Name = "dataGridViewResults";
-            dataGridViewResults.Size = new Size(650, 168);
+            dataGridViewResults.Size = new Size(328, 314);
             dataGridViewResults.TabIndex = 1;
             // 
             // splitContainerVert
@@ -99,21 +126,34 @@
             // 
             // splitContainerVert.Panel1
             // 
-            splitContainerVert.Panel1.Controls.Add(splitContainerHoriz);
+            splitContainerVert.Panel1.Controls.Add(plotView);
             splitContainerVert.Panel1.Controls.Add(panel1);
             splitContainerVert.Panel1MinSize = 650;
             // 
             // splitContainerVert.Panel2
             // 
-            splitContainerVert.Panel2.Controls.Add(listViewFields);
+            splitContainerVert.Panel2.Controls.Add(splitContainerHoriz);
             splitContainerVert.Panel2.Padding = new Padding(2);
             splitContainerVert.Size = new Size(1027, 574);
-            splitContainerVert.SplitterDistance = 650;
+            splitContainerVert.SplitterDistance = 691;
             splitContainerVert.TabIndex = 2;
+            // 
+            // plotView
+            // 
+            plotView.Dock = DockStyle.Fill;
+            plotView.Location = new Point(0, 113);
+            plotView.Name = "plotView";
+            plotView.PanCursor = Cursors.Hand;
+            plotView.Size = new Size(691, 461);
+            plotView.TabIndex = 3;
+            plotView.Text = "plotView";
+            plotView.ZoomHorizontalCursor = Cursors.SizeWE;
+            plotView.ZoomRectangleCursor = Cursors.SizeNWSE;
+            plotView.ZoomVerticalCursor = Cursors.SizeNS;
             // 
             // panel1
             // 
-            panel1.Controls.Add(comboBoxDataSource);
+            panel1.Controls.Add(comboBoxDataSourceView);
             panel1.Controls.Add(labelDatasource);
             panel1.Controls.Add(labelDescription);
             panel1.Controls.Add(labelName);
@@ -122,31 +162,31 @@
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(650, 113);
+            panel1.Size = new Size(691, 113);
             panel1.TabIndex = 2;
             // 
-            // comboBoxDataSource
+            // comboBoxDataSourceView
             // 
-            comboBoxDataSource.DropDownStyle = ComboBoxStyle.DropDownList;
-            comboBoxDataSource.FormattingEnabled = true;
-            comboBoxDataSource.Location = new Point(88, 11);
-            comboBoxDataSource.Name = "comboBoxDataSource";
-            comboBoxDataSource.Size = new Size(537, 23);
-            comboBoxDataSource.TabIndex = 5;
+            comboBoxDataSourceView.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBoxDataSourceView.FormattingEnabled = true;
+            comboBoxDataSourceView.Location = new Point(113, 11);
+            comboBoxDataSourceView.Name = "comboBoxDataSourceView";
+            comboBoxDataSourceView.Size = new Size(512, 23);
+            comboBoxDataSourceView.TabIndex = 5;
             // 
             // labelDatasource
             // 
             labelDatasource.AutoSize = true;
             labelDatasource.Location = new Point(12, 14);
             labelDatasource.Name = "labelDatasource";
-            labelDatasource.Size = new Size(70, 15);
+            labelDatasource.Size = new Size(95, 15);
             labelDatasource.TabIndex = 4;
-            labelDatasource.Text = "Data Source";
+            labelDatasource.Text = "DataSource View";
             // 
             // labelDescription
             // 
             labelDescription.AutoSize = true;
-            labelDescription.Location = new Point(15, 72);
+            labelDescription.Location = new Point(40, 72);
             labelDescription.Name = "labelDescription";
             labelDescription.Size = new Size(67, 15);
             labelDescription.TabIndex = 3;
@@ -155,7 +195,7 @@
             // labelName
             // 
             labelName.AutoSize = true;
-            labelName.Location = new Point(42, 43);
+            labelName.Location = new Point(68, 43);
             labelName.Name = "labelName";
             labelName.Size = new Size(39, 15);
             labelName.TabIndex = 2;
@@ -163,51 +203,21 @@
             // 
             // textBoxDescription
             // 
-            textBoxDescription.Location = new Point(87, 69);
+            textBoxDescription.Location = new Point(113, 69);
             textBoxDescription.Name = "textBoxDescription";
-            textBoxDescription.Size = new Size(538, 23);
+            textBoxDescription.Size = new Size(512, 23);
             textBoxDescription.TabIndex = 1;
             // 
             // textBoxName
             // 
-            textBoxName.Location = new Point(87, 40);
+            textBoxName.Location = new Point(113, 40);
             textBoxName.Name = "textBoxName";
-            textBoxName.Size = new Size(538, 23);
+            textBoxName.Size = new Size(512, 23);
             textBoxName.TabIndex = 0;
-            // 
-            // listViewFields
-            // 
-            listViewFields.CheckBoxes = true;
-            listViewFields.Columns.AddRange(new ColumnHeader[] { columnHeaderAlias, columnHeaderName, columnHeaderType });
-            listViewFields.Dock = DockStyle.Fill;
-            listViewFields.FullRowSelect = true;
-            listViewFields.GridLines = true;
-            listViewFields.LabelEdit = true;
-            listViewFields.Location = new Point(2, 2);
-            listViewFields.Name = "listViewFields";
-            listViewFields.Size = new Size(369, 570);
-            listViewFields.TabIndex = 1;
-            listViewFields.UseCompatibleStateImageBehavior = false;
-            listViewFields.View = View.Details;
-            // 
-            // columnHeaderAlias
-            // 
-            columnHeaderAlias.Text = "Alias";
-            columnHeaderAlias.Width = 125;
-            // 
-            // columnHeaderName
-            // 
-            columnHeaderName.Text = "Name";
-            columnHeaderName.Width = 125;
-            // 
-            // columnHeaderType
-            // 
-            columnHeaderType.Text = "Type";
-            columnHeaderType.Width = 100;
             // 
             // toolStripHeader
             // 
-            toolStripHeader.Items.AddRange(new ToolStripItem[] { toolStripButtonSave, toolStripSeparator1, toolStripButtonRun, toolStripButtonStop });
+            toolStripHeader.Items.AddRange(new ToolStripItem[] { toolStripButtonSave, toolStripSeparator1, toolStripButtonRefresh, toolStripButtonStop });
             toolStripHeader.Location = new Point(0, 0);
             toolStripHeader.Name = "toolStripHeader";
             toolStripHeader.Size = new Size(1027, 25);
@@ -229,15 +239,15 @@
             toolStripSeparator1.Name = "toolStripSeparator1";
             toolStripSeparator1.Size = new Size(6, 25);
             // 
-            // toolStripButtonRun
+            // toolStripButtonRefresh
             // 
-            toolStripButtonRun.DisplayStyle = ToolStripItemDisplayStyle.Image;
-            toolStripButtonRun.Image = (Image)resources.GetObject("toolStripButtonRun.Image");
-            toolStripButtonRun.ImageTransparentColor = Color.Magenta;
-            toolStripButtonRun.Name = "toolStripButtonRun";
-            toolStripButtonRun.Size = new Size(23, 22);
-            toolStripButtonRun.Text = "Run";
-            toolStripButtonRun.Click += ToolStripButtonRun_Click;
+            toolStripButtonRefresh.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripButtonRefresh.Image = (Image)resources.GetObject("toolStripButtonRefresh.Image");
+            toolStripButtonRefresh.ImageTransparentColor = Color.Magenta;
+            toolStripButtonRefresh.Name = "toolStripButtonRefresh";
+            toolStripButtonRefresh.Size = new Size(23, 22);
+            toolStripButtonRefresh.Text = "Refresh";
+            toolStripButtonRefresh.Click += ToolStripButtonRefresh_Click;
             // 
             // toolStripButtonStop
             // 
@@ -256,7 +266,7 @@
             statusStrip1.TabIndex = 2;
             statusStrip1.Text = "statusStrip1";
             // 
-            // FormDataSourceView
+            // FormChart
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -265,11 +275,12 @@
             Controls.Add(toolStripHeader);
             Controls.Add(statusStrip1);
             MinimizeBox = false;
-            Name = "FormDataSourceView";
+            Name = "FormChart";
             ShowInTaskbar = false;
             StartPosition = FormStartPosition.CenterParent;
-            Text = "Datasource View";
+            Text = "Chart";
             Load += FormEditDataView_Load;
+            splitContainerHoriz.Panel1.ResumeLayout(false);
             splitContainerHoriz.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)splitContainerHoriz).EndInit();
             splitContainerHoriz.ResumeLayout(false);
@@ -289,14 +300,13 @@
         #endregion
         private SplitContainer splitContainerHoriz;
         private SplitContainer splitContainerVert;
-        private ListView listViewFields;
+        private ListView listDataViewFields;
         private ColumnHeader columnHeaderName;
-        private ColumnHeader columnHeaderAlias;
         private ColumnHeader columnHeaderType;
         private ToolStrip toolStripHeader;
         private ToolStripButton toolStripButtonSave;
         private ToolStripSeparator toolStripSeparator1;
-        private ToolStripButton toolStripButtonRun;
+        private ToolStripButton toolStripButtonRefresh;
         private ToolStripButton toolStripButtonStop;
         private DataGridView dataGridViewResults;
         private StatusStrip statusStrip1;
@@ -305,7 +315,8 @@
         private Label labelName;
         private TextBox textBoxDescription;
         private TextBox textBoxName;
-        private ComboBox comboBoxDataSource;
+        private ComboBox comboBoxDataSourceView;
         private Label labelDatasource;
+        private OxyPlot.WindowsForms.PlotView plotView;
     }
 }

@@ -12,9 +12,9 @@ namespace UI.Forms
             listViewDataSources.MouseDoubleClick += (object? sender, MouseEventArgs e) => EditSelectedItem();
         }
 
-        private void FormDataSources_Load(object sender, EventArgs e)
+        private void FormDataSourceCollection_Load(object sender, EventArgs e)
         {
-            foreach (var dataSource in DataSourceCollection.Load())
+            foreach (var dataSource in DataSourceModelCollection.Load())
             {
                 var item = new ListViewItem(dataSource.Name);
                 item.SubItems.Add(dataSource.ServerName);
@@ -26,20 +26,20 @@ namespace UI.Forms
 
         private void SaveGrid()
         {
-            var dataSources = new DataSourceCollection();
+            var dataSources = new DataSourceModelCollection();
 
             foreach (ListViewItem item in listViewDataSources.Items)
             {
                 Utility.EnsureNotNull(item.Tag);
-                dataSources.Add((DataSource)item.Tag);
+                dataSources.Add((DataSourceModel)item.Tag);
             }
 
             dataSources.Save();
         }
 
-        private DataSource? EstablishConnection(DataSource? connectionInfo = null)
+        private DataSourceModel? EstablishConnection(DataSourceModel? connectionInfo = null)
         {
-            using var formDataSource = new FormDatasource(connectionInfo);
+            using var formDataSource = new FormDataSource(connectionInfo);
             if (formDataSource.ShowDialog() == DialogResult.OK)
             {
                 return formDataSource.DataSource;
@@ -49,7 +49,7 @@ namespace UI.Forms
 
         private void ButtonAdd_Click(object sender, EventArgs e)
         {
-            DataSource? dataSource = EstablishConnection();
+            DataSourceModel? dataSource = EstablishConnection();
             if (dataSource == null)
             {
                 return;
@@ -73,7 +73,7 @@ namespace UI.Forms
 
             var selectedItem = listViewDataSources.SelectedItems[0];
 
-            var dataSource = selectedItem.Tag as DataSource;
+            var dataSource = selectedItem.Tag as DataSourceModel;
             Utility.EnsureNotNull(dataSource);
 
             dataSource = EstablishConnection(dataSource);

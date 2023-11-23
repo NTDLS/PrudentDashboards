@@ -1,6 +1,6 @@
 ﻿namespace UI.Forms
 {
-    partial class FormDataSourceViewCollection
+    partial class FormChartCollection
     {
         /// <summary>
         /// Required designer variable.
@@ -31,9 +31,9 @@
             buttonAdd = new Button();
             buttonEdit = new Button();
             buttonDelete = new Button();
-            listViewDataViews = new ListView();
+            listViewCharts = new ListView();
             columnHeaderName = new ColumnHeader();
-            columnHeaderDataSource = new ColumnHeader();
+            columnHeaderDataView = new ColumnHeader();
             buttonClose = new Button();
             SuspendLayout();
             // 
@@ -67,27 +67,27 @@
             buttonDelete.UseVisualStyleBackColor = true;
             buttonDelete.Click += ButtonDelete_Click;
             // 
-            // listViewDataViews
+            // listViewCharts
             // 
-            listViewDataViews.Columns.AddRange(new ColumnHeader[] { columnHeaderName, columnHeaderDataSource });
-            listViewDataViews.FullRowSelect = true;
-            listViewDataViews.GridLines = true;
-            listViewDataViews.Location = new Point(12, 12);
-            listViewDataViews.Name = "listViewDataViews";
-            listViewDataViews.Size = new Size(640, 452);
-            listViewDataViews.TabIndex = 3;
-            listViewDataViews.UseCompatibleStateImageBehavior = false;
-            listViewDataViews.View = View.Details;
+            listViewCharts.Columns.AddRange(new ColumnHeader[] { columnHeaderName, columnHeaderDataView });
+            listViewCharts.FullRowSelect = true;
+            listViewCharts.GridLines = true;
+            listViewCharts.Location = new Point(12, 12);
+            listViewCharts.Name = "listViewCharts";
+            listViewCharts.Size = new Size(640, 452);
+            listViewCharts.TabIndex = 3;
+            listViewCharts.UseCompatibleStateImageBehavior = false;
+            listViewCharts.View = View.Details;
             // 
             // columnHeaderName
             // 
             columnHeaderName.Text = "Name";
             columnHeaderName.Width = 300;
             // 
-            // columnHeaderDataSource
+            // columnHeaderDataView
             // 
-            columnHeaderDataSource.Text = "Data Source";
-            columnHeaderDataSource.Width = 200;
+            columnHeaderDataView.Text = "Data View";
+            columnHeaderDataView.Width = 200;
             // 
             // buttonClose
             // 
@@ -99,24 +99,24 @@
             buttonClose.UseVisualStyleBackColor = true;
             buttonClose.Click += ButtonClose_Click;
             // 
-            // FormDataSourceViewCollection
+            // FormChartCollection
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(742, 485);
             Controls.Add(buttonClose);
-            Controls.Add(listViewDataViews);
+            Controls.Add(listViewCharts);
             Controls.Add(buttonDelete);
             Controls.Add(buttonEdit);
             Controls.Add(buttonAdd);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
             MinimizeBox = false;
-            Name = "FormDataSourceViewCollection";
+            Name = "FormChartCollection";
             ShowInTaskbar = false;
             StartPosition = FormStartPosition.CenterParent;
-            Text = "Datasource Views";
-            Load += FormDataSourceViewCollection_Load;
+            Text = "Charts";
+            Load += FormChartCollection_Load;
             ResumeLayout(false);
         }
 
@@ -125,9 +125,9 @@
         private Button buttonAdd;
         private Button buttonEdit;
         private Button buttonDelete;
-        private ListView listViewDataViews;
+        private ListView listViewCharts;
         private ColumnHeader columnHeaderName;
         private Button buttonClose;
-        private ColumnHeader columnHeaderDataSource;
+        private ColumnHeader columnHeaderDataView;
     }
 }

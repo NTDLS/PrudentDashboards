@@ -5,24 +5,24 @@ using System.Data.SqlClient;
 
 namespace UI.Forms
 {
-    public partial class FormDatasource : Form
+    public partial class FormDataSource : Form
     {
-        public DataSource DataSource { get; set; }
+        public DataSourceModel DataSource { get; set; }
 
-        public FormDatasource()
+        public FormDataSource()
         {
             InitializeComponent();
-            DataSource = new DataSource()
+            DataSource = new DataSourceModel()
             {
                 IntegratedSecurity = true,
             };
         }
 
-        public FormDatasource(DataSource? connectionInfo)
+        public FormDataSource(DataSourceModel? connectionInfo)
         {
             if (connectionInfo == null)
             {
-                DataSource = new DataSource()
+                DataSource = new DataSourceModel()
                 {
                     IntegratedSecurity = true,
                 };
@@ -101,7 +101,7 @@ namespace UI.Forms
                             sqlConnection.Open();
                             progressForm.Close();
 
-                            DataSource = new DataSource()
+                            DataSource = new DataSourceModel()
                             {
                                 Name = textBoxName.Text,
                                 Description = textBoxDescription.Text,

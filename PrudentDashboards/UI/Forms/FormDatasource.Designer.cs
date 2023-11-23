@@ -1,6 +1,6 @@
 ﻿namespace UI.Forms
 {
-    partial class FormDatasource
+    partial class FormDataSource
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormDatasource));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormDataSource));
             buttonCancel = new Button();
             buttonOk = new Button();
             textBoxUsername = new TextBox();
@@ -258,7 +258,7 @@
             groupBoxIdentification.TabStop = false;
             groupBoxIdentification.Text = "Identification";
             // 
-            // FormEstablishSQLServerDatasourceConnection
+            // FormDatasource
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -271,10 +271,10 @@
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
             MinimizeBox = false;
-            Name = "FormEstablishSQLServerDatasourceConnection";
+            Name = "FormDatasource";
             ShowInTaskbar = false;
             StartPosition = FormStartPosition.CenterParent;
-            Text = "Establish SQLServer Connection";
+            Text = "Data Source";
             Load += EstablishSQLServerConnection_Load;
             groupBoxSQLServerConnectivity.ResumeLayout(false);
             groupBoxSQLServerConnectivity.PerformLayout();

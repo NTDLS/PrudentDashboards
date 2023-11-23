@@ -52,5 +52,11 @@ namespace UI
             using var formDataSourceViews = new FormDataSourceViewCollection();
             formDataSourceViews.ShowDialog();
         }
+
+        private void ChartsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using var formChartCollection = new FormChartCollection();
+            formChartCollection.ShowDialog();
+        }
     }
 }

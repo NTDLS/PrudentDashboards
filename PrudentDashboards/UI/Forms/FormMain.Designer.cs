@@ -71,14 +71,14 @@
             // 
             datasourcesToolStripMenuItem.Name = "datasourcesToolStripMenuItem";
             datasourcesToolStripMenuItem.Size = new Size(180, 22);
-            datasourcesToolStripMenuItem.Text = "Datasources";
+            datasourcesToolStripMenuItem.Text = "Data Sources";
             datasourcesToolStripMenuItem.Click += DatasourcesToolStripMenuItem_Click;
             // 
             // dataviewsToolStripMenuItem
             // 
             dataviewsToolStripMenuItem.Name = "dataviewsToolStripMenuItem";
             dataviewsToolStripMenuItem.Size = new Size(180, 22);
-            dataviewsToolStripMenuItem.Text = "Dataviews";
+            dataviewsToolStripMenuItem.Text = "Data Views";
             dataviewsToolStripMenuItem.Click += DataviewsToolStripMenuItem_Click;
             // 
             // chartsToolStripMenuItem
@@ -86,6 +86,7 @@
             chartsToolStripMenuItem.Name = "chartsToolStripMenuItem";
             chartsToolStripMenuItem.Size = new Size(180, 22);
             chartsToolStripMenuItem.Text = "Charts";
+            chartsToolStripMenuItem.Click += ChartsToolStripMenuItem_Click;
             // 
             // FormMain
             // 
@@ -96,7 +97,7 @@
             MainMenuStrip = menuStrip1;
             Name = "FormMain";
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "FormMain";
+            Text = "Prudent Dashboards";
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();
             ResumeLayout(false);

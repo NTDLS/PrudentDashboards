@@ -2,11 +2,11 @@
 
 namespace Library.Models
 {
-    public class DataSourceCollection : List<DataSource>
+    public class ChartModelCollection : List<ChartModel>
     {
-        public static DataSourceCollection Load()
+        public static ChartModelCollection Load()
         {
-            return ApplicationData.LoadFromDisk(Constants.TitleCaption, new DataSourceCollection(), Utility.GetEncryptionProvider());
+            return ApplicationData.LoadFromDisk(Constants.TitleCaption, new ChartModelCollection(), Utility.GetEncryptionProvider());
         }
 
         public void Save()

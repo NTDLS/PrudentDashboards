@@ -122,7 +122,7 @@
             ShowInTaskbar = false;
             StartPosition = FormStartPosition.CenterParent;
             Text = "Data Sources";
-            Load += FormDataSources_Load;
+            Load += FormDataSourceCollection_Load;
             ResumeLayout(false);
         }
 

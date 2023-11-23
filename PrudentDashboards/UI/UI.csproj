@@ -21,10 +21,16 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="Forms\FormChartCollection.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Forms\FormChart.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Forms\FormDataSourceViewCollection.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Update="Forms\FormDatasource.cs">
+    <Compile Update="Forms\FormDataSource.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Update="Properties\Resources.Designer.cs">

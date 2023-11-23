@@ -15,11 +15,11 @@ namespace UI
     public partial class FormDataSourceView : Form
     {
         public TextEditor Editor { get; private set; }
-        public DataSourceView DataSourceView { get; private set; }
+        public DataSourceViewModel DataSourceView { get; private set; }
 
-        private DataSource? _dataSource;
+        private DataSourceModel? _dataSource;
 
-        public FormDataSourceView(DataSourceView? dataSourceView = null)
+        public FormDataSourceView(DataSourceViewModel? dataSourceView = null)
         {
             InitializeComponent();
 
@@ -55,14 +55,14 @@ namespace UI
                 }
             };
 
-            comboBoxDatasource.SelectedIndexChanged += (object? sender, EventArgs e) =>
+            comboBoxDataSource.SelectedIndexChanged += (object? sender, EventArgs e) =>
             {
-                _dataSource = (comboBoxDatasource.SelectedItem as DataSourceComboItem)?.DataSource;
+                _dataSource = (comboBoxDataSource.SelectedItem as DataSourceComboItem)?.DataSource;
             };
 
             if (dataSourceView == null)
             {
-                DataSourceView = new DataSourceView()
+                DataSourceView = new DataSourceViewModel()
                 {
                     Name = "",
                     SQLText = "SELECT\r\n\t*\r\nFROM\r\n\t"
@@ -79,14 +79,14 @@ namespace UI
 
         private void FormEditDataView_Load(object sender, EventArgs e)
         {
-            foreach (var dataSource in DataSourceCollection.Load())
+            foreach (var dataSource in DataSourceModelCollection.Load())
             {
                 var item = new DataSourceComboItem(dataSource);
-                comboBoxDatasource.Items.Add(item);
+                comboBoxDataSource.Items.Add(item);
 
                 if (DataSourceView.DataSourceId == dataSource.Id)
                 {
-                    comboBoxDatasource.SelectedItem = item;
+                    comboBoxDataSource.SelectedItem = item;
                 }
             }
 
@@ -121,7 +121,7 @@ namespace UI
 
                     foreach (var field in reader.Fields)
                     {
-                        AddTypeToList(new DataSourceField(field.Name, field.Type.Name) { Enabled = true });
+                        AddTypeToList(new DataSourceFieldModel(field.Name, field.Type.Name) { Enabled = true });
                         AddGridColumn(field.Name);
                     }
 
@@ -163,7 +163,7 @@ namespace UI
             }
         }
 
-        private void AddTypeToList(DataSourceField dataSourceField)
+        private void AddTypeToList(DataSourceFieldModel dataSourceField)
         {
             if (dataGridViewResults.InvokeRequired)
             {
@@ -205,7 +205,7 @@ namespace UI
             DataSourceView.Fields.Clear();
             foreach (ListViewItem item in listViewFields.Items)
             {
-                DataSourceView.Fields.Add(new DataSourceField()
+                DataSourceView.Fields.Add(new DataSourceFieldModel()
                 {
                     Name = item.Text,
                     Type = item.SubItems[0].Text,
