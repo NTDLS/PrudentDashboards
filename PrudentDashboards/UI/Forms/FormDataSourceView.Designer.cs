@@ -1,6 +1,6 @@
 ﻿namespace UI
 {
-    partial class FormEditDataView
+    partial class FormDataSourceView
     {
         /// <summary>
         /// Required designer variable.
@@ -28,10 +28,17 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormEditDataView));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormDataSourceView));
             splitContainerHoriz = new SplitContainer();
             dataGridViewResults = new DataGridView();
             splitContainerVert = new SplitContainer();
+            panel1 = new Panel();
+            comboBoxDatasource = new ComboBox();
+            labelDatasource = new Label();
+            labelDescription = new Label();
+            labelName = new Label();
+            textBoxDescription = new TextBox();
+            textBoxName = new TextBox();
             listViewFields = new ListView();
             columnHeaderAlias = new ColumnHeader();
             columnHeaderName = new ColumnHeader();
@@ -50,13 +57,14 @@
             splitContainerVert.Panel1.SuspendLayout();
             splitContainerVert.Panel2.SuspendLayout();
             splitContainerVert.SuspendLayout();
+            panel1.SuspendLayout();
             toolStripHeader.SuspendLayout();
             SuspendLayout();
             // 
             // splitContainerHoriz
             // 
             splitContainerHoriz.Dock = DockStyle.Fill;
-            splitContainerHoriz.Location = new Point(0, 0);
+            splitContainerHoriz.Location = new Point(0, 113);
             splitContainerHoriz.Name = "splitContainerHoriz";
             splitContainerHoriz.Orientation = Orientation.Horizontal;
             // 
@@ -67,8 +75,8 @@
             // splitContainerHoriz.Panel2
             // 
             splitContainerHoriz.Panel2.Controls.Add(dataGridViewResults);
-            splitContainerHoriz.Size = new Size(633, 574);
-            splitContainerHoriz.SplitterDistance = 361;
+            splitContainerHoriz.Size = new Size(650, 461);
+            splitContainerHoriz.SplitterDistance = 289;
             splitContainerHoriz.TabIndex = 1;
             // 
             // dataGridViewResults
@@ -79,26 +87,93 @@
             dataGridViewResults.GridColor = SystemColors.Control;
             dataGridViewResults.Location = new Point(0, 0);
             dataGridViewResults.Name = "dataGridViewResults";
-            dataGridViewResults.Size = new Size(633, 209);
+            dataGridViewResults.Size = new Size(650, 168);
             dataGridViewResults.TabIndex = 1;
             // 
             // splitContainerVert
             // 
             splitContainerVert.Dock = DockStyle.Fill;
+            splitContainerVert.FixedPanel = FixedPanel.Panel2;
             splitContainerVert.Location = new Point(0, 25);
             splitContainerVert.Name = "splitContainerVert";
             // 
             // splitContainerVert.Panel1
             // 
             splitContainerVert.Panel1.Controls.Add(splitContainerHoriz);
+            splitContainerVert.Panel1.Controls.Add(panel1);
+            splitContainerVert.Panel1MinSize = 650;
             // 
             // splitContainerVert.Panel2
             // 
             splitContainerVert.Panel2.Controls.Add(listViewFields);
             splitContainerVert.Panel2.Padding = new Padding(2);
             splitContainerVert.Size = new Size(1027, 574);
-            splitContainerVert.SplitterDistance = 633;
+            splitContainerVert.SplitterDistance = 650;
             splitContainerVert.TabIndex = 2;
+            // 
+            // panel1
+            // 
+            panel1.Controls.Add(comboBoxDatasource);
+            panel1.Controls.Add(labelDatasource);
+            panel1.Controls.Add(labelDescription);
+            panel1.Controls.Add(labelName);
+            panel1.Controls.Add(textBoxDescription);
+            panel1.Controls.Add(textBoxName);
+            panel1.Dock = DockStyle.Top;
+            panel1.Location = new Point(0, 0);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(650, 113);
+            panel1.TabIndex = 2;
+            // 
+            // comboBoxDatasource
+            // 
+            comboBoxDatasource.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBoxDatasource.FormattingEnabled = true;
+            comboBoxDatasource.Location = new Point(88, 11);
+            comboBoxDatasource.Name = "comboBoxDatasource";
+            comboBoxDatasource.Size = new Size(537, 23);
+            comboBoxDatasource.TabIndex = 5;
+            // 
+            // labelDatasource
+            // 
+            labelDatasource.AutoSize = true;
+            labelDatasource.Location = new Point(12, 14);
+            labelDatasource.Name = "labelDatasource";
+            labelDatasource.Size = new Size(70, 15);
+            labelDatasource.TabIndex = 4;
+            labelDatasource.Text = "Data Source";
+            // 
+            // labelDescription
+            // 
+            labelDescription.AutoSize = true;
+            labelDescription.Location = new Point(15, 72);
+            labelDescription.Name = "labelDescription";
+            labelDescription.Size = new Size(67, 15);
+            labelDescription.TabIndex = 3;
+            labelDescription.Text = "Description";
+            // 
+            // labelName
+            // 
+            labelName.AutoSize = true;
+            labelName.Location = new Point(42, 43);
+            labelName.Name = "labelName";
+            labelName.Size = new Size(39, 15);
+            labelName.TabIndex = 2;
+            labelName.Text = "Name";
+            // 
+            // textBoxDescription
+            // 
+            textBoxDescription.Location = new Point(87, 69);
+            textBoxDescription.Name = "textBoxDescription";
+            textBoxDescription.Size = new Size(538, 23);
+            textBoxDescription.TabIndex = 1;
+            // 
+            // textBoxName
+            // 
+            textBoxName.Location = new Point(87, 40);
+            textBoxName.Name = "textBoxName";
+            textBoxName.Size = new Size(538, 23);
+            textBoxName.TabIndex = 0;
             // 
             // listViewFields
             // 
@@ -110,7 +185,7 @@
             listViewFields.LabelEdit = true;
             listViewFields.Location = new Point(2, 2);
             listViewFields.Name = "listViewFields";
-            listViewFields.Size = new Size(386, 570);
+            listViewFields.Size = new Size(369, 570);
             listViewFields.TabIndex = 1;
             listViewFields.UseCompatibleStateImageBehavior = false;
             listViewFields.View = View.Details;
@@ -147,6 +222,7 @@
             toolStripButtonSave.Name = "toolStripButtonSave";
             toolStripButtonSave.Size = new Size(23, 22);
             toolStripButtonSave.Text = "Save";
+            toolStripButtonSave.Click += ToolStripButtonSave_Click;
             // 
             // toolStripSeparator1
             // 
@@ -161,7 +237,7 @@
             toolStripButtonRun.Name = "toolStripButtonRun";
             toolStripButtonRun.Size = new Size(23, 22);
             toolStripButtonRun.Text = "Run";
-            toolStripButtonRun.Click += toolStripButtonRun_Click;
+            toolStripButtonRun.Click += ToolStripButtonRun_Click;
             // 
             // toolStripButtonStop
             // 
@@ -180,7 +256,7 @@
             statusStrip1.TabIndex = 2;
             statusStrip1.Text = "statusStrip1";
             // 
-            // FormEditDataView
+            // FormDataSourceView
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -188,7 +264,10 @@
             Controls.Add(splitContainerVert);
             Controls.Add(toolStripHeader);
             Controls.Add(statusStrip1);
-            Name = "FormEditDataView";
+            MinimizeBox = false;
+            Name = "FormDataSourceView";
+            ShowInTaskbar = false;
+            StartPosition = FormStartPosition.CenterParent;
             Text = "FormMain";
             Load += FormEditDataView_Load;
             splitContainerHoriz.Panel2.ResumeLayout(false);
@@ -199,6 +278,8 @@
             splitContainerVert.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)splitContainerVert).EndInit();
             splitContainerVert.ResumeLayout(false);
+            panel1.ResumeLayout(false);
+            panel1.PerformLayout();
             toolStripHeader.ResumeLayout(false);
             toolStripHeader.PerformLayout();
             ResumeLayout(false);
@@ -219,5 +300,12 @@
         private ToolStripButton toolStripButtonStop;
         private DataGridView dataGridViewResults;
         private StatusStrip statusStrip1;
+        private Panel panel1;
+        private Label labelDescription;
+        private Label labelName;
+        private TextBox textBoxDescription;
+        private TextBox textBoxName;
+        private ComboBox comboBoxDatasource;
+        private Label labelDatasource;
     }
 }

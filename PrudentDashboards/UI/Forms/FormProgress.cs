@@ -1,6 +1,4 @@
-﻿using Library;
-
-namespace PrudentDashboards.UI
+﻿namespace PrudentDashboards.UI
 {
     public partial class FormProgress : Form
     {

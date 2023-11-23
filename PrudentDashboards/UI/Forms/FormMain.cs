@@ -1,7 +1,4 @@
 ﻿using Library;
-using NTDLS.NASCCL;
-using PrudentDashboards.UI;
-using System.Data.SqlClient;
 using UI.Forms;
 
 namespace UI
@@ -17,7 +14,7 @@ namespace UI
         {
             if (InvokeRequired)
             {
-                Invoke(new Action(() => Close()));
+                Invoke(new Action(Close));
                 return;
             }
             base.Close();
@@ -27,7 +24,7 @@ namespace UI
         {
             if (InvokeRequired)
             {
-                Invoke(new Action(() => Close()));
+                Invoke(new Action(Close));
                 return;
             }
             DialogResult = result;
@@ -44,12 +41,16 @@ namespace UI
             MessageBox.Show(text, Constants.TitleCaption, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
         }
 
-        private void datasourcesToolStripMenuItem_Click(object sender, EventArgs e)
+        private void DatasourcesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            using (var formDataSources = new FormDataSources())
-            {
-                formDataSources.ShowDialog();
-            }
+            using var formDataSources = new FormDataSourceCollection();
+            formDataSources.ShowDialog();
+        }
+
+        private void DataviewsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            using var formDataSourceViews = new FormDataSourceViewCollection();
+            formDataSourceViews.ShowDialog();
         }
     }
 }

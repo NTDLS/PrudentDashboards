@@ -57,7 +57,7 @@
             // exitToolStripMenuItem
             // 
             exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            exitToolStripMenuItem.Size = new Size(180, 22);
+            exitToolStripMenuItem.Size = new Size(93, 22);
             exitToolStripMenuItem.Text = "Exit";
             // 
             // administrationToolStripMenuItem
@@ -72,13 +72,14 @@
             datasourcesToolStripMenuItem.Name = "datasourcesToolStripMenuItem";
             datasourcesToolStripMenuItem.Size = new Size(180, 22);
             datasourcesToolStripMenuItem.Text = "Datasources";
-            datasourcesToolStripMenuItem.Click += datasourcesToolStripMenuItem_Click;
+            datasourcesToolStripMenuItem.Click += DatasourcesToolStripMenuItem_Click;
             // 
             // dataviewsToolStripMenuItem
             // 
             dataviewsToolStripMenuItem.Name = "dataviewsToolStripMenuItem";
             dataviewsToolStripMenuItem.Size = new Size(180, 22);
             dataviewsToolStripMenuItem.Text = "Dataviews";
+            dataviewsToolStripMenuItem.Click += DataviewsToolStripMenuItem_Click;
             // 
             // chartsToolStripMenuItem
             // 
@@ -94,6 +95,7 @@
             Controls.Add(menuStrip1);
             MainMenuStrip = menuStrip1;
             Name = "FormMain";
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "FormMain";
             menuStrip1.ResumeLayout(false);
             menuStrip1.PerformLayout();

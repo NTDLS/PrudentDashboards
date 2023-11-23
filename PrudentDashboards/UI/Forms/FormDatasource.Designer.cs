@@ -1,6 +1,6 @@
 ﻿namespace UI.Forms
 {
-    partial class FormEstablishSQLServerDatasourceConnection
+    partial class FormDatasource
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormEstablishSQLServerDatasourceConnection));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(FormDatasource));
             buttonCancel = new Button();
             buttonOk = new Button();
             textBoxUsername = new TextBox();

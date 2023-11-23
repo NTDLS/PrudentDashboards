@@ -1,25 +1,36 @@
 ﻿using Library;
+using Library.Models;
 using PrudentDashboards.UI;
 using System.Data.SqlClient;
 
 namespace UI.Forms
 {
-    public partial class FormEstablishSQLServerConnection : Form
+    public partial class FormDatasource : Form
     {
-        public SqlServerConnectionInfo ConnectionInfo { get; set; }
+        public DataSource DataSource { get; set; }
 
-        public FormEstablishSQLServerConnection()
+        public FormDatasource()
         {
             InitializeComponent();
-            ConnectionInfo = new SqlServerConnectionInfo()
+            DataSource = new DataSource()
             {
                 IntegratedSecurity = true,
             };
         }
 
-        public FormEstablishSQLServerConnection(SqlServerConnectionInfo connectionInfo)
+        public FormDatasource(DataSource? connectionInfo)
         {
-            ConnectionInfo = connectionInfo;
+            if (connectionInfo == null)
+            {
+                DataSource = new DataSource()
+                {
+                    IntegratedSecurity = true,
+                };
+            }
+            else
+            {
+                DataSource = connectionInfo;
+            }
             InitializeComponent();
         }
 
@@ -28,30 +39,40 @@ namespace UI.Forms
             AcceptButton = buttonOk;
             CancelButton = buttonCancel;
 
-            textboxUsername.Text = ConnectionInfo.UserName;
-            textboxPassword.Text = ConnectionInfo.Password;
-            textboxServerName.Text = ConnectionInfo.ServerName;
-            textboxDatabaseName.Text = ConnectionInfo.DatabaseName;
-            checkboxIntegratedSecurity.Checked = ConnectionInfo.IntegratedSecurity;
+            textBoxName.Text = DataSource.Name;
+            textBoxDescription.Text = DataSource.Description;
+            textBoxUsername.Text = DataSource.UserName;
+            textBoxPassword.Text = DataSource.Password;
+            textBoxServerName.Text = DataSource.ServerName;
+            textBoxDatabaseName.Text = DataSource.DatabaseName;
+            checkBoxIntegratedSecurity.Checked = DataSource.IntegratedSecurity;
 
             CheckboxIntegratedSecurity_CheckedChanged(this, new EventArgs());
         }
 
         private void ButtonOk_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(textboxServerName.Text))
+            if (string.IsNullOrWhiteSpace(textBoxName.Text))
+            {
+                MessageBox.Show("You must enter a name (this is just for your identification).", Constants.TitleCaption, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                return;
+            }
+
+            if (string.IsNullOrWhiteSpace(textBoxServerName.Text))
             {
                 MessageBox.Show("You must enter a server name.", Constants.TitleCaption, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
                 return;
             }
-            if (string.IsNullOrWhiteSpace(textboxDatabaseName.Text))
+
+            if (string.IsNullOrWhiteSpace(textBoxDatabaseName.Text))
             {
                 MessageBox.Show("You must enter a database name.", Constants.TitleCaption, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
                 return;
             }
-            if (checkboxIntegratedSecurity.Checked == false)
+
+            if (checkBoxIntegratedSecurity.Checked == false)
             {
-                if (string.IsNullOrWhiteSpace(textboxUsername.Text))
+                if (string.IsNullOrWhiteSpace(textBoxUsername.Text))
                 {
                     MessageBox.Show("You must enter a user name.", Constants.TitleCaption, MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
                     return;
@@ -66,11 +87,11 @@ namespace UI.Forms
 
                     var builder = new SqlConnectionStringBuilder()
                     {
-                        DataSource = textboxServerName.Text,
-                        InitialCatalog = textboxDatabaseName.Text,
-                        UserID = textboxUsername.Text,
-                        Password = textboxPassword.Text,
-                        IntegratedSecurity = checkboxIntegratedSecurity.Checked
+                        DataSource = textBoxServerName.Text,
+                        InitialCatalog = textBoxDatabaseName.Text,
+                        UserID = textBoxUsername.Text,
+                        Password = textBoxPassword.Text,
+                        IntegratedSecurity = checkBoxIntegratedSecurity.Checked
                     };
 
                     using (var sqlConnection = new SqlConnection(builder.ToString()))
@@ -80,13 +101,15 @@ namespace UI.Forms
                             sqlConnection.Open();
                             progressForm.Close();
 
-                            ConnectionInfo = new SqlServerConnectionInfo()
+                            DataSource = new DataSource()
                             {
-                                ServerName = textboxServerName.Text,
-                                DatabaseName = textboxDatabaseName.Text,
-                                UserName = textboxUsername.Text,
-                                Password = textboxPassword.Text,
-                                IntegratedSecurity = checkboxIntegratedSecurity.Checked
+                                Name = textBoxName.Text,
+                                Description = textBoxDescription.Text,
+                                ServerName = textBoxServerName.Text,
+                                DatabaseName = textBoxDatabaseName.Text,
+                                UserName = textBoxUsername.Text,
+                                Password = textBoxPassword.Text,
+                                IntegratedSecurity = checkBoxIntegratedSecurity.Checked
                             };
 
                             Close(DialogResult.OK);
@@ -138,8 +161,8 @@ namespace UI.Forms
 
         private void CheckboxIntegratedSecurity_CheckedChanged(object sender, EventArgs e)
         {
-            textboxUsername.Enabled = !checkboxIntegratedSecurity.Checked;
-            textboxPassword.Enabled = !checkboxIntegratedSecurity.Checked;
+            textBoxUsername.Enabled = !checkBoxIntegratedSecurity.Checked;
+            textBoxPassword.Enabled = !checkBoxIntegratedSecurity.Checked;
         }
     }
 }

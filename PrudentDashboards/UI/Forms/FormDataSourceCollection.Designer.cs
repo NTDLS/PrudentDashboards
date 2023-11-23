@@ -1,6 +1,6 @@
 ﻿namespace UI.Forms
 {
-    partial class FormDataSources
+    partial class FormDataSourceCollection
     {
         /// <summary>
         /// Required designer variable.
@@ -33,9 +33,9 @@
             buttonDelete = new Button();
             listViewDataSources = new ListView();
             columnHeaderName = new ColumnHeader();
+            buttonClose = new Button();
             columnHeaderServer = new ColumnHeader();
             columnHeaderDatabase = new ColumnHeader();
-            buttonClose = new Button();
             SuspendLayout();
             // 
             // buttonAdd
@@ -46,7 +46,7 @@
             buttonAdd.TabIndex = 0;
             buttonAdd.Text = "Add";
             buttonAdd.UseVisualStyleBackColor = true;
-            buttonAdd.Click += buttonAdd_Click;
+            buttonAdd.Click += ButtonAdd_Click;
             // 
             // buttonEdit
             // 
@@ -56,7 +56,7 @@
             buttonEdit.TabIndex = 1;
             buttonEdit.Text = "Edit";
             buttonEdit.UseVisualStyleBackColor = true;
-            buttonEdit.Click += buttonEdit_Click;
+            buttonEdit.Click += ButtonEdit_Click;
             // 
             // buttonDelete
             // 
@@ -66,7 +66,7 @@
             buttonDelete.TabIndex = 2;
             buttonDelete.Text = "Delete";
             buttonDelete.UseVisualStyleBackColor = true;
-            buttonDelete.Click += buttonDelete_Click;
+            buttonDelete.Click += ButtonDelete_Click;
             // 
             // listViewDataSources
             // 
@@ -85,16 +85,6 @@
             columnHeaderName.Text = "Name";
             columnHeaderName.Width = 200;
             // 
-            // columnHeaderServer
-            // 
-            columnHeaderServer.Text = "Server";
-            columnHeaderServer.Width = 200;
-            // 
-            // columnHeaderDatabase
-            // 
-            columnHeaderDatabase.Text = "Database";
-            columnHeaderDatabase.Width = 200;
-            // 
             // buttonClose
             // 
             buttonClose.Location = new Point(658, 441);
@@ -104,6 +94,16 @@
             buttonClose.Text = "Close";
             buttonClose.UseVisualStyleBackColor = true;
             buttonClose.Click += buttonClose_Click;
+            // 
+            // columnHeaderServer
+            // 
+            columnHeaderServer.Text = "Server";
+            columnHeaderServer.Width = 200;
+            // 
+            // columnHeaderDatabase
+            // 
+            columnHeaderDatabase.Text = "Database";
+            columnHeaderDatabase.Width = 200;
             // 
             // FormDataSources
             // 
@@ -121,7 +121,7 @@
             Name = "FormDataSources";
             ShowInTaskbar = false;
             StartPosition = FormStartPosition.CenterParent;
-            Text = "DataSources";
+            Text = "Data Sources";
             Load += FormDataSources_Load;
             ResumeLayout(false);
         }
@@ -133,8 +133,8 @@
         private Button buttonDelete;
         private ListView listViewDataSources;
         private ColumnHeader columnHeaderName;
+        private Button buttonClose;
         private ColumnHeader columnHeaderServer;
         private ColumnHeader columnHeaderDatabase;
-        private Button buttonClose;
     }
 }

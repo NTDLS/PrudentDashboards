@@ -4,6 +4,7 @@ using System.Runtime.CompilerServices;
 using System.Security.Cryptography;
 using System.Security.Principal;
 using System.Text;
+using static NTDLS.Persistence.PathPersistence;
 
 namespace Library
 {
@@ -61,10 +62,14 @@ namespace Library
             return builder.ToString();
         }
 
-        public static NASCCLStream GetEncryptionProvider()
+        public static EncryptionProvider? GetEncryptionProvider()
         {
-            return new(GetCurrentuserEncryptionKey());
-        }        
+            //return (new NASCCLStream(GetCurrentuserEncryptionKey())).Cipher;
+            return (o) =>
+            {
+                return o;
+            };
+        }
 
         public static string GetCurrentuserEncryptionKey()
         {
