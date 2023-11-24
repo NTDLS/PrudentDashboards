@@ -1,6 +1,9 @@
 ﻿using Library;
+using Library.ManagedConnectivity;
 using Library.Models;
-using System.Windows.Forms;
+using OxyPlot;
+using OxyPlot.Series;
+using PrudentDashboards.UI;
 using UI.Classes;
 
 namespace UI
@@ -9,11 +12,22 @@ namespace UI
     {
         public ChartModel Chart { get; private set; }
 
+        private bool _firstShown = true;
         private DataSourceViewModel? _dataSourceView;
+        private readonly DataSourceModelCollection _dataSourceCollection = DataSourceModelCollection.Load();
 
         public FormChart(ChartModel? chart = null)
         {
             InitializeComponent();
+
+            Shown += (object? sender, EventArgs e) =>
+            {
+                if (_firstShown)
+                {
+                    _firstShown = false;
+                    BuildChart();
+                }
+            };
 
             comboBoxDataSourceView.SelectedIndexChanged += (object? sender, EventArgs e) =>
             {
@@ -53,7 +67,6 @@ namespace UI
             listViewRows.AllowDrop = true;
             listViewColumns.AllowDrop = true;
 
-            // Subscribe to the necessary events for drag-and-drop
             listViewDataSourceViewFields.ItemDrag += ListViewSource_ItemDrag;
 
             listViewValues.DragEnter += ListViewTarget_DragEnter;
@@ -77,33 +90,27 @@ namespace UI
 
             void ListViewTarget_DragEnter(object? sender, DragEventArgs e)
             {
-                // Event handler for allowing the drop operation in the target ListView
-
                 if (e.Data != null)
                 {
-                    // Check if the data being dragged is valid for the drop operation
                     if (e.Data.GetDataPresent(typeof(ListViewItem)))
                     {
-                        e.Effect = DragDropEffects.Copy; // Set the cursor to indicate a copy operation
-                    }
-                    else
-                    {
-                        e.Effect = DragDropEffects.None; // Disable the drop operation
+                        e.Effect = DragDropEffects.Copy;
+                        return;
                     }
                 }
+                e.Effect = DragDropEffects.None;
             }
 
             void ListViewTarget_DragDrop(object? sender, DragEventArgs e)
             {
-                // Event handler for handling the drop operation in the target ListView
                 var listview = (ListView?)sender;
-
                 if (listview != null && e.Data != null && e.Data.GetDataPresent(typeof(ListViewItem)))
                 {
                     var item = (ListViewItem?)e.Data.GetData(typeof(ListViewItem));
                     if (item != null)
                     {
-                        listview.Items.Add((ListViewItem)item.Clone()); // Clone and add the item to the target ListView
+                        listview.Items.Add((ListViewItem)item.Clone());
+                        BuildChart();
                     }
                 }
             }
@@ -112,7 +119,6 @@ namespace UI
             {
                 var item = new DataSourceViewComboItem(dataSourceView);
                 comboBoxDataSourceView.Items.Add(item);
-
                 if (Chart.DataSourceViewId == dataSourceView.Id)
                 {
                     comboBoxDataSourceView.SelectedItem = item;
@@ -130,9 +136,98 @@ namespace UI
 
         private void FormEditDataView_Load(object sender, EventArgs e) { }
 
+        private void BuildChart()
+        {
+            if (_dataSourceView == null)
+            {
+                return;
+            }
+
+            var dataSource = _dataSourceCollection.Where(o=> o.Id == _dataSourceView.DataSourceId).FirstOrDefault();
+
+            if (dataSource == null)
+            {
+                return;
+            }
+
+            var plotModel = new PlotModel
+            {
+                Title = textBoxName.Text,
+                Subtitle = textBoxDescription.Text                 
+            };
+
+            var series = new LineSeries
+            {
+                Title = "Data Series",
+            };
+
+            series.Points.Add(new DataPoint(1, 10));
+            series.Points.Add(new DataPoint(2, 20));
+            series.Points.Add(new DataPoint(3, 30));
+            series.Points.Add(new DataPoint(4, 25));
+            series.Points.Add(new DataPoint(5, 35));
+
+            plotModel.Series.Add(series);
+
+            string sqlText = $"SELECT TOP 100 * FROM ({_dataSourceView.SQLText}) as dq";
+
+            using (var formProgress = new FormProgress())
+            {
+                var thread = new Thread(() =>
+                {
+                    formProgress.WaitForVisible();
+
+                    using var connection = new ManagedConnection(dataSource.GetSqlServerConnectionString());
+                    using var reader = connection.ExecuteReader(sqlText);
+
+                    foreach (var field in reader.Fields)
+                    {
+                        AddGridColumn(field.Name);
+                    }
+
+                    foreach (var row in reader)
+                    {
+                        AddGridRow(row.Select(r => r.ToString()).ToList());
+                    }
+
+                    formProgress.Close();
+                });
+
+                thread.Start();
+
+                formProgress.ShowDialog();
+            }
+
+            void AddGridRow(List<string?> values)
+            {
+                if (dataGridViewResults.InvokeRequired)
+                {
+                    dataGridViewResults.Invoke(new Action(() => AddGridRow(values)));
+                }
+                else
+                {
+                    dataGridViewResults.Rows.Add(values.ToArray());
+                }
+            }
+
+            void AddGridColumn(string name)
+            {
+                if (dataGridViewResults.InvokeRequired)
+                {
+                    dataGridViewResults.Invoke(new Action(() => AddGridColumn(name)));
+                }
+                else
+                {
+                    dataGridViewResults.Columns.Add(name, name);
+                }
+            }
+
+            plotView.Model = plotModel;
+        }
+
         private void ToolStripButtonRefresh_Click(object sender, EventArgs e)
         {
-
+            BuildChart();
         }
 
         private void ToolStripButtonSave_Click(object sender, EventArgs e)
