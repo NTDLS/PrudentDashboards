@@ -252,5 +252,15 @@ namespace UI
             DialogResult = DialogResult.OK;
             Close();
         }
+
+        private void ToolStripButtonProperties_Click(object sender, EventArgs e)
+        {
+            splitContainerVertChartBody.Panel1Collapsed = !splitContainerVertChartBody.Panel1Collapsed;
+        }
+
+        private void ToolStripButtonFields_Click(object sender, EventArgs e)
+        {
+            splitContainerVert.Panel2Collapsed = !splitContainerVert.Panel2Collapsed;
+        }
     }
 }

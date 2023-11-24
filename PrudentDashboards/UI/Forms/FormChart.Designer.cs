@@ -53,20 +53,22 @@
             columnHeaderValueFields = new ColumnHeader();
             labelValues = new Label();
             splitContainerVert = new SplitContainer();
-            plotView = new OxyPlot.WindowsForms.PlotView();
-            panel1 = new Panel();
+            splitContainerVertChartBody = new SplitContainer();
             comboBoxDataSourceView = new ComboBox();
             labelDatasource = new Label();
             labelDescription = new Label();
+            textBoxName = new TextBox();
             labelName = new Label();
             textBoxDescription = new TextBox();
-            textBoxName = new TextBox();
+            plotView = new OxyPlot.WindowsForms.PlotView();
             toolStripHeader = new ToolStrip();
             toolStripButtonSave = new ToolStripButton();
             toolStripSeparator1 = new ToolStripSeparator();
             toolStripButtonRefresh = new ToolStripButton();
             toolStripButtonStop = new ToolStripButton();
+            toolStripButtonProperties = new ToolStripButton();
             statusStrip1 = new StatusStrip();
+            toolStripButtonFields = new ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)splitContainerHoriz).BeginInit();
             splitContainerHoriz.Panel1.SuspendLayout();
             splitContainerHoriz.Panel2.SuspendLayout();
@@ -91,7 +93,10 @@
             splitContainerVert.Panel1.SuspendLayout();
             splitContainerVert.Panel2.SuspendLayout();
             splitContainerVert.SuspendLayout();
-            panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)splitContainerVertChartBody).BeginInit();
+            splitContainerVertChartBody.Panel1.SuspendLayout();
+            splitContainerVertChartBody.Panel2.SuspendLayout();
+            splitContainerVertChartBody.SuspendLayout();
             toolStripHeader.SuspendLayout();
             SuspendLayout();
             // 
@@ -359,8 +364,7 @@
             // 
             // splitContainerVert.Panel1
             // 
-            splitContainerVert.Panel1.Controls.Add(plotView);
-            splitContainerVert.Panel1.Controls.Add(panel1);
+            splitContainerVert.Panel1.Controls.Add(splitContainerVertChartBody);
             splitContainerVert.Panel1MinSize = 650;
             // 
             // splitContainerVert.Panel2
@@ -371,46 +375,43 @@
             splitContainerVert.SplitterDistance = 691;
             splitContainerVert.TabIndex = 2;
             // 
-            // plotView
+            // splitContainerVertChartBody
             // 
-            plotView.Dock = DockStyle.Fill;
-            plotView.Location = new Point(0, 113);
-            plotView.Name = "plotView";
-            plotView.PanCursor = Cursors.Hand;
-            plotView.Size = new Size(691, 461);
-            plotView.TabIndex = 3;
-            plotView.Text = "plotView";
-            plotView.ZoomHorizontalCursor = Cursors.SizeWE;
-            plotView.ZoomRectangleCursor = Cursors.SizeNWSE;
-            plotView.ZoomVerticalCursor = Cursors.SizeNS;
+            splitContainerVertChartBody.Dock = DockStyle.Fill;
+            splitContainerVertChartBody.FixedPanel = FixedPanel.Panel1;
+            splitContainerVertChartBody.Location = new Point(0, 0);
+            splitContainerVertChartBody.Name = "splitContainerVertChartBody";
             // 
-            // panel1
+            // splitContainerVertChartBody.Panel1
             // 
-            panel1.Controls.Add(comboBoxDataSourceView);
-            panel1.Controls.Add(labelDatasource);
-            panel1.Controls.Add(labelDescription);
-            panel1.Controls.Add(labelName);
-            panel1.Controls.Add(textBoxDescription);
-            panel1.Controls.Add(textBoxName);
-            panel1.Dock = DockStyle.Top;
-            panel1.Location = new Point(0, 0);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(691, 113);
-            panel1.TabIndex = 2;
+            splitContainerVertChartBody.Panel1.Controls.Add(comboBoxDataSourceView);
+            splitContainerVertChartBody.Panel1.Controls.Add(labelDatasource);
+            splitContainerVertChartBody.Panel1.Controls.Add(labelDescription);
+            splitContainerVertChartBody.Panel1.Controls.Add(textBoxName);
+            splitContainerVertChartBody.Panel1.Controls.Add(labelName);
+            splitContainerVertChartBody.Panel1.Controls.Add(textBoxDescription);
+            splitContainerVertChartBody.Panel1MinSize = 250;
+            // 
+            // splitContainerVertChartBody.Panel2
+            // 
+            splitContainerVertChartBody.Panel2.Controls.Add(plotView);
+            splitContainerVertChartBody.Size = new Size(691, 574);
+            splitContainerVertChartBody.SplitterDistance = 250;
+            splitContainerVertChartBody.TabIndex = 4;
             // 
             // comboBoxDataSourceView
             // 
             comboBoxDataSourceView.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxDataSourceView.FormattingEnabled = true;
-            comboBoxDataSourceView.Location = new Point(113, 11);
+            comboBoxDataSourceView.Location = new Point(7, 34);
             comboBoxDataSourceView.Name = "comboBoxDataSourceView";
-            comboBoxDataSourceView.Size = new Size(512, 23);
+            comboBoxDataSourceView.Size = new Size(236, 23);
             comboBoxDataSourceView.TabIndex = 5;
             // 
             // labelDatasource
             // 
             labelDatasource.AutoSize = true;
-            labelDatasource.Location = new Point(12, 14);
+            labelDatasource.Location = new Point(7, 16);
             labelDatasource.Name = "labelDatasource";
             labelDatasource.Size = new Size(95, 15);
             labelDatasource.TabIndex = 4;
@@ -419,16 +420,23 @@
             // labelDescription
             // 
             labelDescription.AutoSize = true;
-            labelDescription.Location = new Point(40, 72);
+            labelDescription.Location = new Point(4, 129);
             labelDescription.Name = "labelDescription";
             labelDescription.Size = new Size(67, 15);
             labelDescription.TabIndex = 3;
             labelDescription.Text = "Description";
             // 
+            // textBoxName
+            // 
+            textBoxName.Location = new Point(7, 103);
+            textBoxName.Name = "textBoxName";
+            textBoxName.Size = new Size(236, 23);
+            textBoxName.TabIndex = 0;
+            // 
             // labelName
             // 
             labelName.AutoSize = true;
-            labelName.Location = new Point(68, 43);
+            labelName.Location = new Point(7, 85);
             labelName.Name = "labelName";
             labelName.Size = new Size(39, 15);
             labelName.TabIndex = 2;
@@ -436,21 +444,28 @@
             // 
             // textBoxDescription
             // 
-            textBoxDescription.Location = new Point(113, 69);
+            textBoxDescription.Location = new Point(7, 147);
+            textBoxDescription.Multiline = true;
             textBoxDescription.Name = "textBoxDescription";
-            textBoxDescription.Size = new Size(512, 23);
+            textBoxDescription.Size = new Size(236, 140);
             textBoxDescription.TabIndex = 1;
             // 
-            // textBoxName
+            // plotView
             // 
-            textBoxName.Location = new Point(113, 40);
-            textBoxName.Name = "textBoxName";
-            textBoxName.Size = new Size(512, 23);
-            textBoxName.TabIndex = 0;
+            plotView.Dock = DockStyle.Fill;
+            plotView.Location = new Point(0, 0);
+            plotView.Name = "plotView";
+            plotView.PanCursor = Cursors.Hand;
+            plotView.Size = new Size(437, 574);
+            plotView.TabIndex = 3;
+            plotView.Text = "plotView";
+            plotView.ZoomHorizontalCursor = Cursors.SizeWE;
+            plotView.ZoomRectangleCursor = Cursors.SizeNWSE;
+            plotView.ZoomVerticalCursor = Cursors.SizeNS;
             // 
             // toolStripHeader
             // 
-            toolStripHeader.Items.AddRange(new ToolStripItem[] { toolStripButtonSave, toolStripSeparator1, toolStripButtonRefresh, toolStripButtonStop });
+            toolStripHeader.Items.AddRange(new ToolStripItem[] { toolStripButtonSave, toolStripSeparator1, toolStripButtonRefresh, toolStripButtonStop, toolStripButtonProperties, toolStripButtonFields });
             toolStripHeader.Location = new Point(0, 0);
             toolStripHeader.Name = "toolStripHeader";
             toolStripHeader.Size = new Size(1027, 25);
@@ -491,6 +506,17 @@
             toolStripButtonStop.Size = new Size(23, 22);
             toolStripButtonStop.Text = "Stop";
             // 
+            // toolStripButtonProperties
+            // 
+            toolStripButtonProperties.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripButtonProperties.Image = (Image)resources.GetObject("toolStripButtonProperties.Image");
+            toolStripButtonProperties.ImageTransparentColor = Color.Magenta;
+            toolStripButtonProperties.Name = "toolStripButtonProperties";
+            toolStripButtonProperties.Size = new Size(23, 22);
+            toolStripButtonProperties.Text = "Properties";
+            toolStripButtonProperties.ToolTipText = "Properties";
+            toolStripButtonProperties.Click += ToolStripButtonProperties_Click;
+            // 
             // statusStrip1
             // 
             statusStrip1.Location = new Point(0, 599);
@@ -498,6 +524,17 @@
             statusStrip1.Size = new Size(1027, 22);
             statusStrip1.TabIndex = 2;
             statusStrip1.Text = "statusStrip1";
+            // 
+            // toolStripButtonFields
+            // 
+            toolStripButtonFields.DisplayStyle = ToolStripItemDisplayStyle.Image;
+            toolStripButtonFields.Image = (Image)resources.GetObject("toolStripButtonFields.Image");
+            toolStripButtonFields.ImageTransparentColor = Color.Magenta;
+            toolStripButtonFields.Name = "toolStripButtonFields";
+            toolStripButtonFields.Size = new Size(23, 22);
+            toolStripButtonFields.Text = "toolStripButtonFields";
+            toolStripButtonFields.ToolTipText = "Fields";
+            toolStripButtonFields.Click += ToolStripButtonFields_Click;
             // 
             // FormChart
             // 
@@ -541,8 +578,11 @@
             splitContainerVert.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)splitContainerVert).EndInit();
             splitContainerVert.ResumeLayout(false);
-            panel1.ResumeLayout(false);
-            panel1.PerformLayout();
+            splitContainerVertChartBody.Panel1.ResumeLayout(false);
+            splitContainerVertChartBody.Panel1.PerformLayout();
+            splitContainerVertChartBody.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)splitContainerVertChartBody).EndInit();
+            splitContainerVertChartBody.ResumeLayout(false);
             toolStripHeader.ResumeLayout(false);
             toolStripHeader.PerformLayout();
             ResumeLayout(false);
@@ -561,7 +601,6 @@
         private ToolStripButton toolStripButtonRefresh;
         private ToolStripButton toolStripButtonStop;
         private StatusStrip statusStrip1;
-        private Panel panel1;
         private Label labelDescription;
         private Label labelName;
         private TextBox textBoxDescription;
@@ -588,5 +627,8 @@
         private ColumnHeader columnHeaderAxisFields;
         private ColumnHeader columnHeaderValueFields;
         private ColumnHeader columnHeaderFilterFields;
+        private ToolStripButton toolStripButtonProperties;
+        private SplitContainer splitContainerVertChartBody;
+        private ToolStripButton toolStripButtonFields;
     }
 }
