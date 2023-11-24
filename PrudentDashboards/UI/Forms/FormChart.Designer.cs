@@ -36,20 +36,20 @@
             splitContainerHorzFieldSelction = new SplitContainer();
             splitContainerTopFieldSelector = new SplitContainer();
             panel2 = new Panel();
-            listViewFilters = new ListView();
+            listViewFilter = new ListView();
             columnHeaderFilterFields = new ColumnHeader();
             labelFilters = new Label();
             panel4 = new Panel();
-            listViewLegend = new ListView();
-            columnHeaderLegendFields = new ColumnHeader();
-            labelLegend = new Label();
+            listViewSeries = new ListView();
+            columnHeaderSeriesFields = new ColumnHeader();
+            labelSeries = new Label();
             splitContainerBottomFieldSelector = new SplitContainer();
             panel3 = new Panel();
             listViewAxis = new ListView();
             columnHeaderAxisFields = new ColumnHeader();
             labelAxis = new Label();
             panel5 = new Panel();
-            listViewValues = new ListView();
+            listViewValue = new ListView();
             columnHeaderValueFields = new ColumnHeader();
             labelValues = new Label();
             dataGridViewResults = new DataGridView();
@@ -179,7 +179,7 @@
             // panel2
             // 
             panel2.BackColor = SystemColors.Control;
-            panel2.Controls.Add(listViewFilters);
+            panel2.Controls.Add(listViewFilter);
             panel2.Controls.Add(labelFilters);
             panel2.Dock = DockStyle.Fill;
             panel2.Location = new Point(0, 0);
@@ -187,19 +187,19 @@
             panel2.Size = new Size(171, 159);
             panel2.TabIndex = 3;
             // 
-            // listViewFilters
+            // listViewFilter
             // 
-            listViewFilters.Columns.AddRange(new ColumnHeader[] { columnHeaderFilterFields });
-            listViewFilters.Dock = DockStyle.Fill;
-            listViewFilters.FullRowSelect = true;
-            listViewFilters.GridLines = true;
-            listViewFilters.Location = new Point(0, 15);
-            listViewFilters.MultiSelect = false;
-            listViewFilters.Name = "listViewFilters";
-            listViewFilters.Size = new Size(171, 144);
-            listViewFilters.TabIndex = 0;
-            listViewFilters.UseCompatibleStateImageBehavior = false;
-            listViewFilters.View = View.Details;
+            listViewFilter.Columns.AddRange(new ColumnHeader[] { columnHeaderFilterFields });
+            listViewFilter.Dock = DockStyle.Fill;
+            listViewFilter.FullRowSelect = true;
+            listViewFilter.GridLines = true;
+            listViewFilter.Location = new Point(0, 15);
+            listViewFilter.MultiSelect = false;
+            listViewFilter.Name = "listViewFilter";
+            listViewFilter.Size = new Size(171, 144);
+            listViewFilter.TabIndex = 0;
+            listViewFilter.UseCompatibleStateImageBehavior = false;
+            listViewFilter.View = View.Details;
             // 
             // columnHeaderFilterFields
             // 
@@ -219,42 +219,42 @@
             // panel4
             // 
             panel4.BackColor = SystemColors.Control;
-            panel4.Controls.Add(listViewLegend);
-            panel4.Controls.Add(labelLegend);
+            panel4.Controls.Add(listViewSeries);
+            panel4.Controls.Add(labelSeries);
             panel4.Dock = DockStyle.Fill;
             panel4.Location = new Point(0, 0);
             panel4.Name = "panel4";
             panel4.Size = new Size(153, 159);
             panel4.TabIndex = 3;
             // 
-            // listViewLegend
+            // listViewSeries
             // 
-            listViewLegend.Columns.AddRange(new ColumnHeader[] { columnHeaderLegendFields });
-            listViewLegend.Dock = DockStyle.Fill;
-            listViewLegend.FullRowSelect = true;
-            listViewLegend.GridLines = true;
-            listViewLegend.Location = new Point(0, 15);
-            listViewLegend.MultiSelect = false;
-            listViewLegend.Name = "listViewLegend";
-            listViewLegend.Size = new Size(153, 144);
-            listViewLegend.TabIndex = 0;
-            listViewLegend.UseCompatibleStateImageBehavior = false;
-            listViewLegend.View = View.Details;
+            listViewSeries.Columns.AddRange(new ColumnHeader[] { columnHeaderSeriesFields });
+            listViewSeries.Dock = DockStyle.Fill;
+            listViewSeries.FullRowSelect = true;
+            listViewSeries.GridLines = true;
+            listViewSeries.Location = new Point(0, 15);
+            listViewSeries.MultiSelect = false;
+            listViewSeries.Name = "listViewSeries";
+            listViewSeries.Size = new Size(153, 144);
+            listViewSeries.TabIndex = 0;
+            listViewSeries.UseCompatibleStateImageBehavior = false;
+            listViewSeries.View = View.Details;
             // 
-            // columnHeaderLegendFields
+            // columnHeaderSeriesFields
             // 
-            columnHeaderLegendFields.Text = "Legend Fields";
-            columnHeaderLegendFields.Width = 130;
+            columnHeaderSeriesFields.Text = "Series Fields";
+            columnHeaderSeriesFields.Width = 130;
             // 
-            // labelLegend
+            // labelSeries
             // 
-            labelLegend.AutoSize = true;
-            labelLegend.Dock = DockStyle.Top;
-            labelLegend.Location = new Point(0, 0);
-            labelLegend.Name = "labelLegend";
-            labelLegend.Size = new Size(46, 15);
-            labelLegend.TabIndex = 1;
-            labelLegend.Text = "Legend";
+            labelSeries.AutoSize = true;
+            labelSeries.Dock = DockStyle.Top;
+            labelSeries.Location = new Point(0, 0);
+            labelSeries.Name = "labelSeries";
+            labelSeries.Size = new Size(87, 15);
+            labelSeries.TabIndex = 1;
+            labelSeries.Text = "Series (Legend)";
             // 
             // splitContainerBottomFieldSelector
             // 
@@ -309,14 +309,14 @@
             labelAxis.Dock = DockStyle.Top;
             labelAxis.Location = new Point(0, 0);
             labelAxis.Name = "labelAxis";
-            labelAxis.Size = new Size(29, 15);
+            labelAxis.Size = new Size(96, 15);
             labelAxis.TabIndex = 1;
-            labelAxis.Text = "Axis";
+            labelAxis.Text = "Axis (Categories)";
             // 
             // panel5
             // 
             panel5.BackColor = SystemColors.Control;
-            panel5.Controls.Add(listViewValues);
+            panel5.Controls.Add(listViewValue);
             panel5.Controls.Add(labelValues);
             panel5.Dock = DockStyle.Fill;
             panel5.Location = new Point(0, 0);
@@ -324,19 +324,19 @@
             panel5.Size = new Size(153, 151);
             panel5.TabIndex = 3;
             // 
-            // listViewValues
+            // listViewValue
             // 
-            listViewValues.Columns.AddRange(new ColumnHeader[] { columnHeaderValueFields });
-            listViewValues.Dock = DockStyle.Fill;
-            listViewValues.FullRowSelect = true;
-            listViewValues.GridLines = true;
-            listViewValues.Location = new Point(0, 15);
-            listViewValues.MultiSelect = false;
-            listViewValues.Name = "listViewValues";
-            listViewValues.Size = new Size(153, 136);
-            listViewValues.TabIndex = 0;
-            listViewValues.UseCompatibleStateImageBehavior = false;
-            listViewValues.View = View.Details;
+            listViewValue.Columns.AddRange(new ColumnHeader[] { columnHeaderValueFields });
+            listViewValue.Dock = DockStyle.Fill;
+            listViewValue.FullRowSelect = true;
+            listViewValue.GridLines = true;
+            listViewValue.Location = new Point(0, 15);
+            listViewValue.MultiSelect = false;
+            listViewValue.Name = "listViewValue";
+            listViewValue.Size = new Size(153, 136);
+            listViewValue.TabIndex = 0;
+            listViewValue.UseCompatibleStateImageBehavior = false;
+            listViewValue.View = View.Details;
             // 
             // columnHeaderValueFields
             // 
@@ -593,14 +593,14 @@
         private Panel panel4;
         private SplitContainer splitContainerBottomFieldSelector;
         private Label labelFilters;
-        private ListView listViewFilters;
-        private Label labelLegend;
-        private ListView listViewLegend;
+        private ListView listViewFilter;
+        private Label labelSeries;
+        private ListView listViewSeries;
         private Label labelAxis;
         private ListView listViewAxis;
         private Label labelValues;
-        private ListView listViewValues;
-        private ColumnHeader columnHeaderLegendFields;
+        private ListView listViewValue;
+        private ColumnHeader columnHeaderSeriesFields;
         private ColumnHeader columnHeaderAxisFields;
         private ColumnHeader columnHeaderValueFields;
         private ColumnHeader columnHeaderFilterFields;

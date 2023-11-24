@@ -62,22 +62,22 @@ namespace UI
             splitContainerTopFieldSelector.SplitterDistance = splitContainerTopFieldSelector.Width / 2;
             splitContainerBottomFieldSelector.SplitterDistance = splitContainerBottomFieldSelector.Width / 2;
 
-            listViewValues.AllowDrop = true;
-            listViewFilters.AllowDrop = true;
+            listViewValue.AllowDrop = true;
+            listViewFilter.AllowDrop = true;
             listViewAxis.AllowDrop = true;
-            listViewLegend.AllowDrop = true;
+            listViewSeries.AllowDrop = true;
 
             listViewDataSourceViewFields.ItemDrag += ListViewSource_ItemDrag;
 
-            listViewValues.DragEnter += ListViewTarget_DragEnter;
-            listViewFilters.DragEnter += ListViewTarget_DragEnter;
+            listViewValue.DragEnter += ListViewTarget_DragEnter;
+            listViewFilter.DragEnter += ListViewTarget_DragEnter;
             listViewAxis.DragEnter += ListViewTarget_DragEnter;
-            listViewLegend.DragEnter += ListViewTarget_DragEnter;
+            listViewSeries.DragEnter += ListViewTarget_DragEnter;
 
-            listViewValues.DragDrop += ListViewTarget_DragDrop;
-            listViewFilters.DragDrop += ListViewTarget_DragDrop;
+            listViewValue.DragDrop += ListViewTarget_DragDrop;
+            listViewFilter.DragDrop += ListViewTarget_DragDrop;
             listViewAxis.DragDrop += ListViewTarget_DragDrop;
-            listViewLegend.DragDrop += ListViewTarget_DragDrop;
+            listViewSeries.DragDrop += ListViewTarget_DragDrop;
 
             void ListViewSource_ItemDrag(object? sender, ItemDragEventArgs e)
             {
@@ -136,6 +136,17 @@ namespace UI
 
         private void FormEditDataView_Load(object sender, EventArgs e) { }
 
+
+        private List<string> GetListViewFields(ListView listView)
+        {
+            List<string> results = new();
+            foreach (ListViewItem item in listView.Items)
+            {
+                results.Add(item.Text);
+            }
+            return results;
+        }
+
         private void BuildChart()
         {
             if (_dataSourceView == null)
@@ -144,20 +155,27 @@ namespace UI
             }
 
             var dataSource = _dataSourceCollection.Where(o=> o.Id == _dataSourceView.DataSourceId).FirstOrDefault();
-
             if (dataSource == null)
             {
                 return;
             }
 
+            var seriesFields = GetListViewFields(listViewSeries);
+            var axisFields = GetListViewFields(listViewAxis);
+            var valueFields = GetListViewFields(listViewValue);
+            var filterFields = GetListViewFields(listViewFilter);
+
             var plotModel = new PlotModel
             {
                 Title = textBoxName.Text,
-                Subtitle = textBoxDescription.Text                 
+                Subtitle = textBoxDescription.Text
             };
 
-            //foreach(ListViewItem 
-
+            if (valueFields.Count == 0 || seriesFields.Count == 0)
+            {
+                plotView.Model = plotModel;
+                return;
+            }
 
             var series = new LineSeries
             {
