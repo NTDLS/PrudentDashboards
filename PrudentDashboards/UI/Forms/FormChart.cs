@@ -3,7 +3,6 @@ using Library.ManagedConnectivity;
 using Library.Models;
 using OxyPlot;
 using OxyPlot.Series;
-using PrudentDashboards.UI;
 using System.Text;
 using UI.Classes;
 
@@ -142,17 +141,10 @@ namespace UI
 
         private void FormEditDataView_Load(object sender, EventArgs e) { }
 
-        private List<string> GetListViewFields(ListView listView)
-        {
-            List<string> results = new();
-            foreach (ListViewItem item in listView.Items)
-            {
-                results.Add(item.Text);
-            }
-            return results;
-        }
         private void BuildChart()
         {
+            ChartType chartType = ChartType.Bar;
+
             if (_dataSourceView == null)
             {
                 return;
@@ -164,10 +156,10 @@ namespace UI
                 return;
             }
 
-            var seriesFields = GetListViewFields(listViewSeries);
-            var axisFields = GetListViewFields(listViewAxis);
-            var valueFields = GetListViewFields(listViewValue);
-            var filterFields = GetListViewFields(listViewFilter);
+            var seriesFields = ChartHelpers.GetListViewFields(listViewSeries);
+            var axisFields = ChartHelpers.GetListViewFields(listViewAxis);
+            var valueFields = ChartHelpers.GetListViewFields(listViewValue);
+            var filterFields = ChartHelpers.GetListViewFields(listViewFilter);
 
             var plotModel = new PlotModel
             {
@@ -181,18 +173,7 @@ namespace UI
                 return;
             }
 
-            var seriesCache = new Dictionary<string, BarSeries>();
-
-            /*
-            foreach (var seriesField in seriesFields)
-            {
-                var series = new BarSeries
-                {
-                    Title = seriesField
-                };
-                seriesCollection.Add(seriesField, series);
-            }
-            */
+            var seriesCache = new Dictionary<string, Series>();
 
             StringBuilder sqlSelectFields = new();
             foreach (var valueField in valueFields)
@@ -217,7 +198,7 @@ namespace UI
             foreach (var row in reader)
             {
                 string seriesCacheKey = string.Empty;
-                for(int i = 0; i < seriesFields.Count; i ++)
+                for (int i = 0; i < seriesFields.Count; i++)
                 {
                     seriesCacheKey += $"[{row.AsString(seriesFields[i], "")}]";
                     if (i < seriesFields.Count - 1) seriesCacheKey += '-';
@@ -225,18 +206,14 @@ namespace UI
 
                 if (seriesCache.TryGetValue(seriesCacheKey, out var cachedSeries) == false)
                 {
-                    cachedSeries = new BarSeries
-                    {
-                        Title = seriesCacheKey
-                    };
+                    cachedSeries = ChartHelpers.CreateSeries(chartType, seriesCacheKey);
                     seriesCache.Add(seriesCacheKey, cachedSeries);
                 }
 
                 foreach (var valueField in valueFields)
                 {
                     var seriesValue = row.AsDecimal(valueField, 0);
-                    //cachedSeries.Add(new DataPoint(cachedSeries.Points.Count, seriesValue));
-                    cachedSeries.Items.Add(new BarItem((double)seriesValue));
+                    ChartHelpers.AddSeriesDataPoint(chartType, cachedSeries, (double)seriesValue);
                 }
             }
 
@@ -247,6 +224,7 @@ namespace UI
 
             plotView.Model = plotModel;
         }
+
 
         private void ToolStripButtonRefresh_Click(object sender, EventArgs e)
         {

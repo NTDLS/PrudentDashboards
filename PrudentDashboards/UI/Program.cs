@@ -1,5 +1,3 @@
-using System.Data;
-
 namespace UI
 {
     internal static class Program
