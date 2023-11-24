@@ -4,6 +4,7 @@ using Library.Models;
 using OxyPlot;
 using OxyPlot.Series;
 using PrudentDashboards.UI;
+using System.Text;
 using UI.Classes;
 
 namespace UI
@@ -57,6 +58,10 @@ namespace UI
             {
                 Chart = chart;
             }
+
+            listViewSeries.Items.Add("Region");
+            listViewSeries.Items.Add("Country");
+            listViewValue.Items.Add("TotalDue");
 
             splitContainerHorzFieldSelction.SplitterDistance = splitContainerHorzFieldSelction.Height / 2;
             splitContainerTopFieldSelector.SplitterDistance = splitContainerTopFieldSelector.Width / 2;
@@ -131,11 +136,11 @@ namespace UI
             if (Owner == null)
             {
                 StartPosition = FormStartPosition.CenterScreen;
+                ShowInTaskbar = true;
             }
         }
 
         private void FormEditDataView_Load(object sender, EventArgs e) { }
-
 
         private List<string> GetListViewFields(ListView listView)
         {
@@ -146,7 +151,6 @@ namespace UI
             }
             return results;
         }
-
         private void BuildChart()
         {
             if (_dataSourceView == null)
@@ -154,7 +158,7 @@ namespace UI
                 return;
             }
 
-            var dataSource = _dataSourceCollection.Where(o=> o.Id == _dataSourceView.DataSourceId).FirstOrDefault();
+            var dataSource = _dataSourceCollection.Where(o => o.Id == _dataSourceView.DataSourceId).FirstOrDefault();
             if (dataSource == null)
             {
                 return;
@@ -177,70 +181,68 @@ namespace UI
                 return;
             }
 
-            var series = new LineSeries
+            var seriesCache = new Dictionary<string, BarSeries>();
+
+            /*
+            foreach (var seriesField in seriesFields)
             {
-                Title = "Data Series",
-            };
-
-            series.Points.Add(new DataPoint(1, 10));
-            series.Points.Add(new DataPoint(2, 20));
-            series.Points.Add(new DataPoint(3, 30));
-            series.Points.Add(new DataPoint(4, 25));
-            series.Points.Add(new DataPoint(5, 35));
-
-            plotModel.Series.Add(series);
-
-            string sqlText = $"SELECT TOP 100 * FROM ({_dataSourceView.SQLText}) as dq";
-
-            using (var formProgress = new FormProgress())
-            {
-                var thread = new Thread(() =>
+                var series = new BarSeries
                 {
-                    formProgress.WaitForVisible();
+                    Title = seriesField
+                };
+                seriesCollection.Add(seriesField, series);
+            }
+            */
 
-                    using var connection = new ManagedConnection(dataSource.GetSqlServerConnectionString());
-                    using var reader = connection.ExecuteReader(sqlText);
-
-                    foreach (var field in reader.Fields)
-                    {
-                        AddGridColumn(field.Name);
-                    }
-
-                    foreach (var row in reader)
-                    {
-                        AddGridRow(row.Select(r => r.ToString()).ToList());
-                    }
-
-                    formProgress.Close();
-                });
-
-                thread.Start();
-
-                formProgress.ShowDialog();
+            StringBuilder sqlSelectFields = new();
+            foreach (var valueField in valueFields)
+            {
+                sqlSelectFields.Append($"SUM(dq.[{valueField}]) as [{valueField}],");
             }
 
-            void AddGridRow(List<string?> values)
+            StringBuilder sqlGroupFields = new();
+            foreach (var seriesField in seriesFields)
             {
-                if (dataGridViewResults.InvokeRequired)
+                sqlSelectFields.Append($"dq.[{seriesField}] as [{seriesField}],");
+                sqlGroupFields.Append($"dq.[{seriesField}],");
+            }
+
+            sqlSelectFields.Length -= 1; //Kill the trailing comma.
+            sqlGroupFields.Length -= 1; //Kill the trailing comma.
+
+            string sqlText = $"SELECT TOP 1000 {sqlSelectFields} FROM ({_dataSourceView.SQLText}) as dq GROUP BY {sqlGroupFields}";
+
+            using var connection = new ManagedConnection(dataSource.GetSqlServerConnectionString());
+            using var reader = connection.ExecuteReader(sqlText);
+            foreach (var row in reader)
+            {
+                string seriesCacheKey = string.Empty;
+                for(int i = 0; i < seriesFields.Count; i ++)
                 {
-                    dataGridViewResults.Invoke(new Action(() => AddGridRow(values)));
+                    seriesCacheKey += $"[{row.AsString(seriesFields[i], "")}]";
+                    if (i < seriesFields.Count - 1) seriesCacheKey += '-';
                 }
-                else
+
+                if (seriesCache.TryGetValue(seriesCacheKey, out var cachedSeries) == false)
                 {
-                    dataGridViewResults.Rows.Add(values.ToArray());
+                    cachedSeries = new BarSeries
+                    {
+                        Title = seriesCacheKey
+                    };
+                    seriesCache.Add(seriesCacheKey, cachedSeries);
+                }
+
+                foreach (var valueField in valueFields)
+                {
+                    var seriesValue = row.AsDecimal(valueField, 0);
+                    //cachedSeries.Add(new DataPoint(cachedSeries.Points.Count, seriesValue));
+                    cachedSeries.Items.Add(new BarItem((double)seriesValue));
                 }
             }
 
-            void AddGridColumn(string name)
+            foreach (var series in seriesCache)
             {
-                if (dataGridViewResults.InvokeRequired)
-                {
-                    dataGridViewResults.Invoke(new Action(() => AddGridColumn(name)));
-                }
-                else
-                {
-                    dataGridViewResults.Columns.Add(name, name);
-                }
+                plotModel.Series.Add(series.Value);
             }
 
             plotView.Model = plotModel;

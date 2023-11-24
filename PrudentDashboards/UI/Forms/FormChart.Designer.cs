@@ -52,7 +52,6 @@
             listViewValue = new ListView();
             columnHeaderValueFields = new ColumnHeader();
             labelValues = new Label();
-            dataGridViewResults = new DataGridView();
             splitContainerVert = new SplitContainer();
             plotView = new OxyPlot.WindowsForms.PlotView();
             panel1 = new Panel();
@@ -88,7 +87,6 @@
             splitContainerBottomFieldSelector.SuspendLayout();
             panel3.SuspendLayout();
             panel5.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridViewResults).BeginInit();
             ((System.ComponentModel.ISupportInitialize)splitContainerVert).BeginInit();
             splitContainerVert.Panel1.SuspendLayout();
             splitContainerVert.Panel2.SuspendLayout();
@@ -112,7 +110,6 @@
             // splitContainerHoriz.Panel2
             // 
             splitContainerHoriz.Panel2.Controls.Add(splitContainerHorzFieldSelction);
-            splitContainerHoriz.Panel2.Controls.Add(dataGridViewResults);
             splitContainerHoriz.Size = new Size(328, 570);
             splitContainerHoriz.SplitterDistance = 252;
             splitContainerHoriz.TabIndex = 1;
@@ -353,17 +350,6 @@
             labelValues.TabIndex = 1;
             labelValues.Text = "Values";
             // 
-            // dataGridViewResults
-            // 
-            dataGridViewResults.BackgroundColor = SystemColors.Control;
-            dataGridViewResults.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewResults.Dock = DockStyle.Fill;
-            dataGridViewResults.GridColor = SystemColors.Control;
-            dataGridViewResults.Location = new Point(0, 0);
-            dataGridViewResults.Name = "dataGridViewResults";
-            dataGridViewResults.Size = new Size(328, 314);
-            dataGridViewResults.TabIndex = 1;
-            // 
             // splitContainerVert
             // 
             splitContainerVert.Dock = DockStyle.Fill;
@@ -551,7 +537,6 @@
             panel3.PerformLayout();
             panel5.ResumeLayout(false);
             panel5.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)dataGridViewResults).EndInit();
             splitContainerVert.Panel1.ResumeLayout(false);
             splitContainerVert.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)splitContainerVert).EndInit();
@@ -575,7 +560,6 @@
         private ToolStripSeparator toolStripSeparator1;
         private ToolStripButton toolStripButtonRefresh;
         private ToolStripButton toolStripButtonStop;
-        private DataGridView dataGridViewResults;
         private StatusStrip statusStrip1;
         private Panel panel1;
         private Label labelDescription;
