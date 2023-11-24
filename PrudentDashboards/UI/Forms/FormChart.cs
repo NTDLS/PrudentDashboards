@@ -19,6 +19,8 @@ namespace UI
             {
                 _dataSourceView = (comboBoxDataSourceView.SelectedItem as DataSourceViewComboItem)?.DataSourceView;
 
+                listViewDataSourceViewFields.Items.Clear();
+
                 if (_dataSourceView != null)
                 {
                     foreach (var field in _dataSourceView.Fields.Where(o => o.Enabled == true))
@@ -94,7 +96,7 @@ namespace UI
             void ListViewTarget_DragDrop(object? sender, DragEventArgs e)
             {
                 // Event handler for handling the drop operation in the target ListView
-                var listview = (ListView)sender;
+                var listview = (ListView?)sender;
 
                 if (listview != null && e.Data != null && e.Data.GetDataPresent(typeof(ListViewItem)))
                 {
@@ -105,10 +107,7 @@ namespace UI
                     }
                 }
             }
-        }
 
-        private void FormEditDataView_Load(object sender, EventArgs e)
-        {
             foreach (var dataSourceView in DataSourceViewModelCollection.Load())
             {
                 var item = new DataSourceViewComboItem(dataSourceView);
@@ -123,8 +122,13 @@ namespace UI
             textBoxName.Text = Chart.Name;
             textBoxDescription.Text = Chart.Description;
 
-            //Chart.Fields.ForEach(o => AddTypeToList(o));
+            if (Owner == null)
+            {
+                StartPosition = FormStartPosition.CenterScreen;
+            }
         }
+
+        private void FormEditDataView_Load(object sender, EventArgs e) { }
 
         private void ToolStripButtonRefresh_Click(object sender, EventArgs e)
         {

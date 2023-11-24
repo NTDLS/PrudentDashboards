@@ -125,12 +125,12 @@
             panel1.Size = new Size(650, 113);
             panel1.TabIndex = 2;
             // 
-            // comboBoxDataSource
+            // comboBoxDatasource
             // 
             comboBoxDataSource.DropDownStyle = ComboBoxStyle.DropDownList;
             comboBoxDataSource.FormattingEnabled = true;
             comboBoxDataSource.Location = new Point(88, 11);
-            comboBoxDataSource.Name = "comboBoxDataSource";
+            comboBoxDataSource.Name = "comboBoxDatasource";
             comboBoxDataSource.Size = new Size(537, 23);
             comboBoxDataSource.TabIndex = 5;
             // 
@@ -268,7 +268,7 @@
             Name = "FormDataSourceView";
             ShowInTaskbar = false;
             StartPosition = FormStartPosition.CenterParent;
-            Text = "Datasource View";
+            Text = "FormMain";
             Load += FormEditDataView_Load;
             splitContainerHoriz.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)splitContainerHoriz).EndInit();

@@ -44,7 +44,7 @@ namespace UI.Forms
         {
             using (var formChart = new FormChart())
             {
-                if (formChart.ShowDialog(this) == DialogResult.OK)
+                if (formChart.ShowDialog() == DialogResult.OK)
                 {
                     var dataViewName = _dataViews.Where(o => o.Id == formChart.Chart.DataSourceViewId).Select(o => o.Name).FirstOrDefault();
 
@@ -72,7 +72,7 @@ namespace UI.Forms
 
             using (var formChart = new FormChart(chart))
             {
-                if (formChart.ShowDialog(this) == DialogResult.OK)
+                if (formChart.ShowDialog() == DialogResult.OK)
                 {
                     var dataSourcename = _dataViews.Where(o => o.Id == formChart.Chart.DataSourceViewId).Select(o => o.Name).FirstOrDefault();
 

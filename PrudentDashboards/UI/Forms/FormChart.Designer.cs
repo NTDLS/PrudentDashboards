@@ -37,6 +37,7 @@
             splitContainerTopFieldSelector = new SplitContainer();
             panel2 = new Panel();
             listViewFilters = new ListView();
+            columnHeaderFilterFields = new ColumnHeader();
             labelFilters = new Label();
             panel4 = new Panel();
             listViewColumns = new ListView();
@@ -67,7 +68,6 @@
             toolStripButtonRefresh = new ToolStripButton();
             toolStripButtonStop = new ToolStripButton();
             statusStrip1 = new StatusStrip();
-            columnHeaderFilterFields = new ColumnHeader();
             ((System.ComponentModel.ISupportInitialize)splitContainerHoriz).BeginInit();
             splitContainerHoriz.Panel1.SuspendLayout();
             splitContainerHoriz.Panel2.SuspendLayout();
@@ -200,6 +200,11 @@
             listViewFilters.TabIndex = 0;
             listViewFilters.UseCompatibleStateImageBehavior = false;
             listViewFilters.View = View.Details;
+            // 
+            // columnHeaderFilterFields
+            // 
+            columnHeaderFilterFields.Text = "Filter Fields";
+            columnHeaderFilterFields.Width = 130;
             // 
             // labelFilters
             // 
@@ -507,11 +512,6 @@
             statusStrip1.Size = new Size(1027, 22);
             statusStrip1.TabIndex = 2;
             statusStrip1.Text = "statusStrip1";
-            // 
-            // columnHeaderFilterFields
-            // 
-            columnHeaderFilterFields.Text = "Filter Fields";
-            columnHeaderFilterFields.Width = 130;
             // 
             // FormChart
             // 

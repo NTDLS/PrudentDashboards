@@ -44,7 +44,7 @@ namespace UI.Forms
         {
             using (var formDataView = new FormDataSourceView())
             {
-                if (formDataView.ShowDialog(this) == DialogResult.OK)
+                if (formDataView.ShowDialog() == DialogResult.OK)
                 {
                     var dataSourcename = _dataSources.Where(o => o.Id == formDataView.DataSourceView.DataSourceId).Select(o => o.Name).FirstOrDefault();
 
@@ -72,7 +72,7 @@ namespace UI.Forms
 
             using (var formDataView = new FormDataSourceView(dataView))
             {
-                if (formDataView.ShowDialog(this) == DialogResult.OK)
+                if (formDataView.ShowDialog() == DialogResult.OK)
                 {
                     var dataSourcename = _dataSources.Where(o => o.Id == formDataView.DataSourceView.DataSourceId).Select(o => o.Name).FirstOrDefault();
 
