@@ -40,14 +40,14 @@
             columnHeaderFilterFields = new ColumnHeader();
             labelFilters = new Label();
             panel4 = new Panel();
-            listViewColumns = new ListView();
-            columnHeaderColumnFields = new ColumnHeader();
-            labelColumns = new Label();
+            listViewLegend = new ListView();
+            columnHeaderLegendFields = new ColumnHeader();
+            labelLegend = new Label();
             splitContainerBottomFieldSelector = new SplitContainer();
             panel3 = new Panel();
-            listViewRows = new ListView();
-            columnHeaderRowFields = new ColumnHeader();
-            labelRows = new Label();
+            listViewAxis = new ListView();
+            columnHeaderAxisFields = new ColumnHeader();
+            labelAxis = new Label();
             panel5 = new Panel();
             listViewValues = new ListView();
             columnHeaderValueFields = new ColumnHeader();
@@ -219,42 +219,42 @@
             // panel4
             // 
             panel4.BackColor = SystemColors.Control;
-            panel4.Controls.Add(listViewColumns);
-            panel4.Controls.Add(labelColumns);
+            panel4.Controls.Add(listViewLegend);
+            panel4.Controls.Add(labelLegend);
             panel4.Dock = DockStyle.Fill;
             panel4.Location = new Point(0, 0);
             panel4.Name = "panel4";
             panel4.Size = new Size(153, 159);
             panel4.TabIndex = 3;
             // 
-            // listViewColumns
+            // listViewLegend
             // 
-            listViewColumns.Columns.AddRange(new ColumnHeader[] { columnHeaderColumnFields });
-            listViewColumns.Dock = DockStyle.Fill;
-            listViewColumns.FullRowSelect = true;
-            listViewColumns.GridLines = true;
-            listViewColumns.Location = new Point(0, 15);
-            listViewColumns.MultiSelect = false;
-            listViewColumns.Name = "listViewColumns";
-            listViewColumns.Size = new Size(153, 144);
-            listViewColumns.TabIndex = 0;
-            listViewColumns.UseCompatibleStateImageBehavior = false;
-            listViewColumns.View = View.Details;
+            listViewLegend.Columns.AddRange(new ColumnHeader[] { columnHeaderLegendFields });
+            listViewLegend.Dock = DockStyle.Fill;
+            listViewLegend.FullRowSelect = true;
+            listViewLegend.GridLines = true;
+            listViewLegend.Location = new Point(0, 15);
+            listViewLegend.MultiSelect = false;
+            listViewLegend.Name = "listViewLegend";
+            listViewLegend.Size = new Size(153, 144);
+            listViewLegend.TabIndex = 0;
+            listViewLegend.UseCompatibleStateImageBehavior = false;
+            listViewLegend.View = View.Details;
             // 
-            // columnHeaderColumnFields
+            // columnHeaderLegendFields
             // 
-            columnHeaderColumnFields.Text = "Column Fields";
-            columnHeaderColumnFields.Width = 130;
+            columnHeaderLegendFields.Text = "Legend Fields";
+            columnHeaderLegendFields.Width = 130;
             // 
-            // labelColumns
+            // labelLegend
             // 
-            labelColumns.AutoSize = true;
-            labelColumns.Dock = DockStyle.Top;
-            labelColumns.Location = new Point(0, 0);
-            labelColumns.Name = "labelColumns";
-            labelColumns.Size = new Size(55, 15);
-            labelColumns.TabIndex = 1;
-            labelColumns.Text = "Columns";
+            labelLegend.AutoSize = true;
+            labelLegend.Dock = DockStyle.Top;
+            labelLegend.Location = new Point(0, 0);
+            labelLegend.Name = "labelLegend";
+            labelLegend.Size = new Size(46, 15);
+            labelLegend.TabIndex = 1;
+            labelLegend.Text = "Legend";
             // 
             // splitContainerBottomFieldSelector
             // 
@@ -276,42 +276,42 @@
             // panel3
             // 
             panel3.BackColor = SystemColors.Control;
-            panel3.Controls.Add(listViewRows);
-            panel3.Controls.Add(labelRows);
+            panel3.Controls.Add(listViewAxis);
+            panel3.Controls.Add(labelAxis);
             panel3.Dock = DockStyle.Fill;
             panel3.Location = new Point(0, 0);
             panel3.Name = "panel3";
             panel3.Size = new Size(171, 151);
             panel3.TabIndex = 3;
             // 
-            // listViewRows
+            // listViewAxis
             // 
-            listViewRows.Columns.AddRange(new ColumnHeader[] { columnHeaderRowFields });
-            listViewRows.Dock = DockStyle.Fill;
-            listViewRows.FullRowSelect = true;
-            listViewRows.GridLines = true;
-            listViewRows.Location = new Point(0, 15);
-            listViewRows.MultiSelect = false;
-            listViewRows.Name = "listViewRows";
-            listViewRows.Size = new Size(171, 136);
-            listViewRows.TabIndex = 0;
-            listViewRows.UseCompatibleStateImageBehavior = false;
-            listViewRows.View = View.Details;
+            listViewAxis.Columns.AddRange(new ColumnHeader[] { columnHeaderAxisFields });
+            listViewAxis.Dock = DockStyle.Fill;
+            listViewAxis.FullRowSelect = true;
+            listViewAxis.GridLines = true;
+            listViewAxis.Location = new Point(0, 15);
+            listViewAxis.MultiSelect = false;
+            listViewAxis.Name = "listViewAxis";
+            listViewAxis.Size = new Size(171, 136);
+            listViewAxis.TabIndex = 0;
+            listViewAxis.UseCompatibleStateImageBehavior = false;
+            listViewAxis.View = View.Details;
             // 
-            // columnHeaderRowFields
+            // columnHeaderAxisFields
             // 
-            columnHeaderRowFields.Text = "Row Fields";
-            columnHeaderRowFields.Width = 130;
+            columnHeaderAxisFields.Text = "Axis Fields";
+            columnHeaderAxisFields.Width = 130;
             // 
-            // labelRows
+            // labelAxis
             // 
-            labelRows.AutoSize = true;
-            labelRows.Dock = DockStyle.Top;
-            labelRows.Location = new Point(0, 0);
-            labelRows.Name = "labelRows";
-            labelRows.Size = new Size(35, 15);
-            labelRows.TabIndex = 1;
-            labelRows.Text = "Rows";
+            labelAxis.AutoSize = true;
+            labelAxis.Dock = DockStyle.Top;
+            labelAxis.Location = new Point(0, 0);
+            labelAxis.Name = "labelAxis";
+            labelAxis.Size = new Size(29, 15);
+            labelAxis.TabIndex = 1;
+            labelAxis.Text = "Axis";
             // 
             // panel5
             // 
@@ -594,14 +594,14 @@
         private SplitContainer splitContainerBottomFieldSelector;
         private Label labelFilters;
         private ListView listViewFilters;
-        private Label labelColumns;
-        private ListView listViewColumns;
-        private Label labelRows;
-        private ListView listViewRows;
+        private Label labelLegend;
+        private ListView listViewLegend;
+        private Label labelAxis;
+        private ListView listViewAxis;
         private Label labelValues;
         private ListView listViewValues;
-        private ColumnHeader columnHeaderColumnFields;
-        private ColumnHeader columnHeaderRowFields;
+        private ColumnHeader columnHeaderLegendFields;
+        private ColumnHeader columnHeaderAxisFields;
         private ColumnHeader columnHeaderValueFields;
         private ColumnHeader columnHeaderFilterFields;
     }

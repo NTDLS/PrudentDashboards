@@ -64,20 +64,20 @@ namespace UI
 
             listViewValues.AllowDrop = true;
             listViewFilters.AllowDrop = true;
-            listViewRows.AllowDrop = true;
-            listViewColumns.AllowDrop = true;
+            listViewAxis.AllowDrop = true;
+            listViewLegend.AllowDrop = true;
 
             listViewDataSourceViewFields.ItemDrag += ListViewSource_ItemDrag;
 
             listViewValues.DragEnter += ListViewTarget_DragEnter;
             listViewFilters.DragEnter += ListViewTarget_DragEnter;
-            listViewRows.DragEnter += ListViewTarget_DragEnter;
-            listViewColumns.DragEnter += ListViewTarget_DragEnter;
+            listViewAxis.DragEnter += ListViewTarget_DragEnter;
+            listViewLegend.DragEnter += ListViewTarget_DragEnter;
 
             listViewValues.DragDrop += ListViewTarget_DragDrop;
             listViewFilters.DragDrop += ListViewTarget_DragDrop;
-            listViewRows.DragDrop += ListViewTarget_DragDrop;
-            listViewColumns.DragDrop += ListViewTarget_DragDrop;
+            listViewAxis.DragDrop += ListViewTarget_DragDrop;
+            listViewLegend.DragDrop += ListViewTarget_DragDrop;
 
             void ListViewSource_ItemDrag(object? sender, ItemDragEventArgs e)
             {
@@ -155,6 +155,9 @@ namespace UI
                 Title = textBoxName.Text,
                 Subtitle = textBoxDescription.Text                 
             };
+
+            //foreach(ListViewItem 
+
 
             var series = new LineSeries
             {
