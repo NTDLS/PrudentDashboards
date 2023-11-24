@@ -1,6 +1,6 @@
 ﻿using Library;
 using Library.Models;
-using System.Data.Common;
+using System.Windows.Forms;
 using UI.Classes;
 
 namespace UI
@@ -18,6 +18,16 @@ namespace UI
             comboBoxDataSourceView.SelectedIndexChanged += (object? sender, EventArgs e) =>
             {
                 _dataSourceView = (comboBoxDataSourceView.SelectedItem as DataSourceViewComboItem)?.DataSourceView;
+
+                if (_dataSourceView != null)
+                {
+                    foreach (var field in _dataSourceView.Fields.Where(o => o.Enabled == true))
+                    {
+                        var item = listViewDataSourceViewFields.Items.Add(field.Alias);
+                        item.SubItems.Add(field.Type);
+                        item.Checked = field.Enabled;
+                    }
+                }
             };
 
             if (chart == null)
@@ -30,6 +40,70 @@ namespace UI
             else
             {
                 Chart = chart;
+            }
+
+            splitContainerHorzFieldSelction.SplitterDistance = splitContainerHorzFieldSelction.Height / 2;
+            splitContainerTopFieldSelector.SplitterDistance = splitContainerTopFieldSelector.Width / 2;
+            splitContainerBottomFieldSelector.SplitterDistance = splitContainerBottomFieldSelector.Width / 2;
+
+            listViewValues.AllowDrop = true;
+            listViewFilters.AllowDrop = true;
+            listViewRows.AllowDrop = true;
+            listViewColumns.AllowDrop = true;
+
+            // Subscribe to the necessary events for drag-and-drop
+            listViewDataSourceViewFields.ItemDrag += ListViewSource_ItemDrag;
+
+            listViewValues.DragEnter += ListViewTarget_DragEnter;
+            listViewFilters.DragEnter += ListViewTarget_DragEnter;
+            listViewRows.DragEnter += ListViewTarget_DragEnter;
+            listViewColumns.DragEnter += ListViewTarget_DragEnter;
+
+            listViewValues.DragDrop += ListViewTarget_DragDrop;
+            listViewFilters.DragDrop += ListViewTarget_DragDrop;
+            listViewRows.DragDrop += ListViewTarget_DragDrop;
+            listViewColumns.DragDrop += ListViewTarget_DragDrop;
+
+            void ListViewSource_ItemDrag(object? sender, ItemDragEventArgs e)
+            {
+                var listview = (ListView?)sender;
+                if (listview != null && e.Item != null)
+                {
+                    listview.DoDragDrop(e.Item, DragDropEffects.Copy);
+                }
+            }
+
+            void ListViewTarget_DragEnter(object? sender, DragEventArgs e)
+            {
+                // Event handler for allowing the drop operation in the target ListView
+
+                if (e.Data != null)
+                {
+                    // Check if the data being dragged is valid for the drop operation
+                    if (e.Data.GetDataPresent(typeof(ListViewItem)))
+                    {
+                        e.Effect = DragDropEffects.Copy; // Set the cursor to indicate a copy operation
+                    }
+                    else
+                    {
+                        e.Effect = DragDropEffects.None; // Disable the drop operation
+                    }
+                }
+            }
+
+            void ListViewTarget_DragDrop(object? sender, DragEventArgs e)
+            {
+                // Event handler for handling the drop operation in the target ListView
+                var listview = (ListView)sender;
+
+                if (listview != null && e.Data != null && e.Data.GetDataPresent(typeof(ListViewItem)))
+                {
+                    var item = (ListViewItem?)e.Data.GetData(typeof(ListViewItem));
+                    if (item != null)
+                    {
+                        listview.Items.Add((ListViewItem)item.Clone()); // Clone and add the item to the target ListView
+                    }
+                }
             }
         }
 

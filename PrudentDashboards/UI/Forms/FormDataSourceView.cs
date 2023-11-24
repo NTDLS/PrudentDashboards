@@ -121,7 +121,7 @@ namespace UI
 
                     foreach (var field in reader.Fields)
                     {
-                        AddTypeToList(new DataSourceFieldModel(field.Name, field.Type.Name) { Enabled = true });
+                        AddTypeToList(new DataSourceFieldModel(field.Name, field.Name, field.Type.Name) { Enabled = true });
                         AddGridColumn(field.Name);
                     }
 
@@ -207,8 +207,9 @@ namespace UI
             {
                 DataSourceView.Fields.Add(new DataSourceFieldModel()
                 {
-                    Name = item.Text,
-                    Type = item.SubItems[0].Text,
+                    Alias = item.Text,
+                    Name = item.SubItems[1].Text,
+                    Type = item.SubItems[2].Text,
                     Enabled = item.Checked
                 });
             }
