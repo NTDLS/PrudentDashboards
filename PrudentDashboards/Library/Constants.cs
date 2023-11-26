@@ -8,6 +8,7 @@
     public enum ChartType
     {
         Bar,
-        Line
+        Line,
+        Pie
     }
 }

@@ -54,6 +54,8 @@
             labelValues = new Label();
             splitContainerVert = new SplitContainer();
             splitContainerVertChartBody = new SplitContainer();
+            comboBoxChartType = new ComboBox();
+            labelChartType = new Label();
             comboBoxDataSourceView = new ComboBox();
             labelDatasource = new Label();
             labelDescription = new Label();
@@ -67,8 +69,8 @@
             toolStripButtonRefresh = new ToolStripButton();
             toolStripButtonStop = new ToolStripButton();
             toolStripButtonProperties = new ToolStripButton();
-            statusStrip1 = new StatusStrip();
             toolStripButtonFields = new ToolStripButton();
+            statusStrip1 = new StatusStrip();
             ((System.ComponentModel.ISupportInitialize)splitContainerHoriz).BeginInit();
             splitContainerHoriz.Panel1.SuspendLayout();
             splitContainerHoriz.Panel2.SuspendLayout();
@@ -384,6 +386,8 @@
             // 
             // splitContainerVertChartBody.Panel1
             // 
+            splitContainerVertChartBody.Panel1.Controls.Add(comboBoxChartType);
+            splitContainerVertChartBody.Panel1.Controls.Add(labelChartType);
             splitContainerVertChartBody.Panel1.Controls.Add(comboBoxDataSourceView);
             splitContainerVertChartBody.Panel1.Controls.Add(labelDatasource);
             splitContainerVertChartBody.Panel1.Controls.Add(labelDescription);
@@ -399,6 +403,24 @@
             splitContainerVertChartBody.SplitterDistance = 250;
             splitContainerVertChartBody.TabIndex = 4;
             // 
+            // comboBoxChartType
+            // 
+            comboBoxChartType.DropDownStyle = ComboBoxStyle.DropDownList;
+            comboBoxChartType.FormattingEnabled = true;
+            comboBoxChartType.Location = new Point(7, 329);
+            comboBoxChartType.Name = "comboBoxChartType";
+            comboBoxChartType.Size = new Size(236, 23);
+            comboBoxChartType.TabIndex = 7;
+            // 
+            // labelChartType
+            // 
+            labelChartType.AutoSize = true;
+            labelChartType.Location = new Point(7, 311);
+            labelChartType.Name = "labelChartType";
+            labelChartType.Size = new Size(63, 15);
+            labelChartType.TabIndex = 6;
+            labelChartType.Text = "Chart Type";
+            // 
             // comboBoxDataSourceView
             // 
             comboBoxDataSourceView.DropDownStyle = ComboBoxStyle.DropDownList;
@@ -413,9 +435,9 @@
             labelDatasource.AutoSize = true;
             labelDatasource.Location = new Point(7, 16);
             labelDatasource.Name = "labelDatasource";
-            labelDatasource.Size = new Size(95, 15);
+            labelDatasource.Size = new Size(94, 15);
             labelDatasource.TabIndex = 4;
-            labelDatasource.Text = "DataSource View";
+            labelDatasource.Text = "Datasource View";
             // 
             // labelDescription
             // 
@@ -517,14 +539,6 @@
             toolStripButtonProperties.ToolTipText = "Properties";
             toolStripButtonProperties.Click += ToolStripButtonProperties_Click;
             // 
-            // statusStrip1
-            // 
-            statusStrip1.Location = new Point(0, 599);
-            statusStrip1.Name = "statusStrip1";
-            statusStrip1.Size = new Size(1027, 22);
-            statusStrip1.TabIndex = 2;
-            statusStrip1.Text = "statusStrip1";
-            // 
             // toolStripButtonFields
             // 
             toolStripButtonFields.DisplayStyle = ToolStripItemDisplayStyle.Image;
@@ -535,6 +549,14 @@
             toolStripButtonFields.Text = "toolStripButtonFields";
             toolStripButtonFields.ToolTipText = "Fields";
             toolStripButtonFields.Click += ToolStripButtonFields_Click;
+            // 
+            // statusStrip1
+            // 
+            statusStrip1.Location = new Point(0, 599);
+            statusStrip1.Name = "statusStrip1";
+            statusStrip1.Size = new Size(1027, 22);
+            statusStrip1.TabIndex = 2;
+            statusStrip1.Text = "statusStrip1";
             // 
             // FormChart
             // 
@@ -630,5 +652,7 @@
         private ToolStripButton toolStripButtonProperties;
         private SplitContainer splitContainerVertChartBody;
         private ToolStripButton toolStripButtonFields;
+        private ComboBox comboBoxChartType;
+        private Label labelChartType;
     }
 }

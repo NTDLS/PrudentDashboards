@@ -16,7 +16,7 @@ namespace UI
             return results;
         }
 
-        public static void AddSeriesDataPoint(ChartType chartType, Series series, double value)
+        public static void AddSeriesDataPoint(ChartType chartType, Series series, double value, string seriesLabel)
         {
             if (chartType == ChartType.Bar)
             {
@@ -26,6 +26,11 @@ namespace UI
             {
                 var castSeries = ((LineSeries)series);
                 castSeries.Points.Add(new DataPoint(castSeries.Points.Count, (double)value));
+            }
+            else if (chartType == ChartType.Pie)
+            {
+                var castSeries = ((PieSeries)series);
+                castSeries.Slices.Add(new PieSlice(seriesLabel, (double)value));
             }
             else
             {
@@ -45,6 +50,13 @@ namespace UI
             else if (chartType == ChartType.Line)
             {
                 return new LineSeries
+                {
+                    Title = displayName
+                };
+            }
+            else if (chartType == ChartType.Pie)
+            {
+                return new PieSeries
                 {
                     Title = displayName
                 };

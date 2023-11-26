@@ -12,6 +12,7 @@ namespace UI
     {
         public ChartModel Chart { get; private set; }
 
+        private ChartType _chartType = ChartType.Bar;
         private bool _firstShown = true;
         private DataSourceViewModel? _dataSourceView;
         private readonly DataSourceModelCollection _dataSourceCollection = DataSourceModelCollection.Load();
@@ -25,7 +26,7 @@ namespace UI
                 if (_firstShown)
                 {
                     _firstShown = false;
-                    BuildChart();
+                    RefreshChart();
                 }
             };
 
@@ -48,19 +49,22 @@ namespace UI
 
             if (chart == null)
             {
-                Chart = new ChartModel()
+                chart = new ChartModel()
                 {
-                    Name = ""
+                    Name = "",
+                    ChartType = ChartType.Bar,
                 };
             }
-            else
-            {
-                Chart = chart;
-            }
+            Chart = chart;
 
-            listViewSeries.Items.Add("Region");
-            listViewSeries.Items.Add("Country");
-            listViewValue.Items.Add("TotalDue");
+            Enum.GetValues<ChartType>().ToList().ForEach(o => comboBoxChartType.Items.Add(o.ToString()));
+            comboBoxChartType.SelectedIndexChanged += (object? sender, EventArgs e) =>
+            {
+                _chartType = Enum.Parse<ChartType>(comboBoxChartType.Text);
+                RefreshChart();
+            };
+            comboBoxChartType.Text = chart.ChartType.ToString();
+            _chartType = chart.ChartType;
 
             splitContainerHorzFieldSelction.SplitterDistance = splitContainerHorzFieldSelction.Height / 2;
             splitContainerTopFieldSelector.SplitterDistance = splitContainerTopFieldSelector.Width / 2;
@@ -82,6 +86,21 @@ namespace UI
             listViewFilter.DragDrop += ListViewTarget_DragDrop;
             listViewAxis.DragDrop += ListViewTarget_DragDrop;
             listViewSeries.DragDrop += ListViewTarget_DragDrop;
+
+            listViewValue.KeyUp += ListView_KeyUp;
+            listViewFilter.KeyUp += ListView_KeyUp;
+            listViewAxis.KeyUp += ListView_KeyUp;
+            listViewSeries.KeyUp += ListView_KeyUp;
+
+            void ListView_KeyUp(object? sender, KeyEventArgs e)
+            {
+                var listview = (ListView?)sender;
+                if (listview != null && listview.SelectedItems?.Count == 1)
+                {
+                    listview.Items.Remove(listview.SelectedItems[0]);
+                    RefreshChart();
+                }
+            }
 
             void ListViewSource_ItemDrag(object? sender, ItemDragEventArgs e)
             {
@@ -114,7 +133,7 @@ namespace UI
                     if (item != null)
                     {
                         listview.Items.Add((ListViewItem)item.Clone());
-                        BuildChart();
+                        RefreshChart();
                     }
                 }
             }
@@ -137,14 +156,20 @@ namespace UI
                 StartPosition = FormStartPosition.CenterScreen;
                 ShowInTaskbar = true;
             }
+
+#if DEBUG
+            //listViewSeries.Items.Add("Region");
+            //listViewSeries.Items.Add("Country");
+            listViewAxis.Items.Add("Region");
+            listViewAxis.Items.Add("Country");
+            listViewValue.Items.Add("TotalDue");
+#endif
         }
 
         private void FormEditDataView_Load(object sender, EventArgs e) { }
 
-        private void BuildChart()
+        private void RefreshChart()
         {
-            ChartType chartType = ChartType.Bar;
-
             if (_dataSourceView == null)
             {
                 return;
@@ -154,6 +179,12 @@ namespace UI
             if (dataSource == null)
             {
                 return;
+            }
+
+
+            if (_chartType == ChartType.Pie)
+            {
+
             }
 
             var seriesFields = ChartHelpers.GetListViewFields(listViewSeries);
@@ -167,7 +198,7 @@ namespace UI
                 Subtitle = textBoxDescription.Text
             };
 
-            if (valueFields.Count == 0 || seriesFields.Count == 0)
+            if (valueFields.Count == 0 || (seriesFields.Count == 0 && axisFields.Count == 0))
             {
                 plotView.Model = plotModel;
                 return;
@@ -188,6 +219,12 @@ namespace UI
                 sqlGroupFields.Append($"dq.[{seriesField}],");
             }
 
+            foreach (var axisField in axisFields)
+            {
+                sqlSelectFields.Append($"dq.[{axisField}] as [{axisField}],");
+                sqlGroupFields.Append($"dq.[{axisField}],");
+            }
+
             sqlSelectFields.Length -= 1; //Kill the trailing comma.
             sqlGroupFields.Length -= 1; //Kill the trailing comma.
 
@@ -197,23 +234,36 @@ namespace UI
             using var reader = connection.ExecuteReader(sqlText);
             foreach (var row in reader)
             {
+                string seriesLabelText = string.Empty;
                 string seriesCacheKey = string.Empty;
+
+                //Build a series label and cache-key;
                 for (int i = 0; i < seriesFields.Count; i++)
                 {
+                    seriesLabelText += $"[{row.AsString(seriesFields[i], "")}]";
+                    if (i < seriesFields.Count - 1) seriesLabelText += '-';
+
                     seriesCacheKey += $"[{row.AsString(seriesFields[i], "")}]";
                     if (i < seriesFields.Count - 1) seriesCacheKey += '-';
                 }
 
+                /*
+                if (_chartType == ChartType.Pie)
+                {
+                    seriesCacheKey = "SinglePieSeries"; //Piecharts can only have one series.
+                }
+                */
+
                 if (seriesCache.TryGetValue(seriesCacheKey, out var cachedSeries) == false)
                 {
-                    cachedSeries = ChartHelpers.CreateSeries(chartType, seriesCacheKey);
+                    cachedSeries = ChartHelpers.CreateSeries(_chartType, seriesLabelText);
                     seriesCache.Add(seriesCacheKey, cachedSeries);
                 }
 
                 foreach (var valueField in valueFields)
                 {
                     var seriesValue = row.AsDecimal(valueField, 0);
-                    ChartHelpers.AddSeriesDataPoint(chartType, cachedSeries, (double)seriesValue);
+                    ChartHelpers.AddSeriesDataPoint(_chartType, cachedSeries, (double)seriesValue, seriesLabelText);
                 }
             }
 
@@ -225,10 +275,9 @@ namespace UI
             plotView.Model = plotModel;
         }
 
-
         private void ToolStripButtonRefresh_Click(object sender, EventArgs e)
         {
-            BuildChart();
+            RefreshChart();
         }
 
         private void ToolStripButtonSave_Click(object sender, EventArgs e)

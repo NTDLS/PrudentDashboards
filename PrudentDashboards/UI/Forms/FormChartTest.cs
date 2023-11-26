@@ -13,7 +13,7 @@ namespace UI
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            Display_LineAndArea();
+            DisplayPieChart();
         }
 
         int next = 1;
@@ -202,10 +202,10 @@ namespace UI
 
             var series = new PieSeries();
 
-            series.Slices.Add(new PieSlice("Category 1", 30));
-            series.Slices.Add(new PieSlice("Category 2", 40));
-            series.Slices.Add(new PieSlice("Category 3", 25));
-            series.Slices.Add(new PieSlice("Category 4", 15));
+            series.Slices.Add(new PieSlice("Category 1", 1000));
+            series.Slices.Add(new PieSlice("Category 2", 2000));
+            series.Slices.Add(new PieSlice("Category 3", 3000));
+            series.Slices.Add(new PieSlice("Category 4", 4000));
 
             plotModel.Series.Add(series);
 
