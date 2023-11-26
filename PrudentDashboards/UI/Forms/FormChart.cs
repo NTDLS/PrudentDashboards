@@ -204,6 +204,11 @@ namespace UI
                 return;
             }
 
+            if (int.TryParse(textBoxRowLimit.Text, out var rowLimit) == false)
+            {
+                rowLimit = 1000;
+            }
+
             var seriesCache = new Dictionary<string, Series>();
 
             StringBuilder sqlSelectFields = new();
@@ -219,21 +224,39 @@ namespace UI
                 sqlGroupFields.Append($"dq.[{seriesField}],");
             }
 
+            StringBuilder orderByFields = new();
+
             foreach (var axisField in axisFields)
             {
                 sqlSelectFields.Append($"dq.[{axisField}] as [{axisField}],");
                 sqlGroupFields.Append($"dq.[{axisField}],");
+                orderByFields.Append($"dq.[{axisField}],");
             }
 
             sqlSelectFields.Length -= 1; //Kill the trailing comma.
             sqlGroupFields.Length -= 1; //Kill the trailing comma.
+            if (orderByFields.Length > 0)
+            {
+                orderByFields.Length -= 1; //Kill the trailing comma.
+            }
 
-            string sqlText = $"SELECT TOP 1000 {sqlSelectFields} FROM ({_dataSourceView.SQLText}) as dq GROUP BY {sqlGroupFields}";
+            var sqlText = new StringBuilder($"SELECT TOP {rowLimit} {sqlSelectFields} FROM ({_dataSourceView.SQLText}) as dq");
+
+            if (sqlGroupFields.Length > 0)
+            {
+                sqlText.AppendLine($"GROUP BY {sqlGroupFields}");
+            }
+
+            if (orderByFields.Length > 0)
+            {
+                sqlText.AppendLine($" ORDER BY {orderByFields}");
+            }
 
             using var connection = new ManagedConnection(dataSource.GetSqlServerConnectionString());
-            using var reader = connection.ExecuteReader(sqlText);
+            using var reader = connection.ExecuteReader(sqlText.ToString());
             foreach (var row in reader)
             {
+                string axisLabelText = string.Empty;
                 string seriesLabelText = string.Empty;
                 string seriesCacheKey = string.Empty;
 
@@ -245,6 +268,16 @@ namespace UI
 
                     seriesCacheKey += $"[{row.AsString(seriesFields[i], "")}]";
                     if (i < seriesFields.Count - 1) seriesCacheKey += '-';
+                }
+
+                //Build a series label and cache-key;
+                for (int i = 0; i < axisFields.Count; i++)
+                {
+                    axisLabelText += $"[{row.AsString(axisFields[i], "")}]";
+                    if (i < axisFields.Count - 1) axisLabelText += '-';
+
+                    //seriesCacheKey += $"[{row.AsString(axisFields[i], "")}]";
+                    //if (i < axisFields.Count - 1) seriesCacheKey += '-';
                 }
 
                 /*
@@ -263,7 +296,7 @@ namespace UI
                 foreach (var valueField in valueFields)
                 {
                     var seriesValue = row.AsDecimal(valueField, 0);
-                    ChartHelpers.AddSeriesDataPoint(_chartType, cachedSeries, (double)seriesValue, seriesLabelText);
+                    ChartHelpers.AddSeriesDataPoint(_chartType, cachedSeries, (double)seriesValue, axisLabelText);
                 }
             }
 

@@ -52,6 +52,7 @@ namespace UI
                 return new LineSeries
                 {
                     Title = displayName
+                     //LegendKey = displayName,
                 };
             }
             else if (chartType == ChartType.Pie)

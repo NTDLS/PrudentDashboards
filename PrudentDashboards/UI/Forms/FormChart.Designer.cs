@@ -71,6 +71,8 @@
             toolStripButtonProperties = new ToolStripButton();
             toolStripButtonFields = new ToolStripButton();
             statusStrip1 = new StatusStrip();
+            textBoxRowLimit = new TextBox();
+            labelRowLimit = new Label();
             ((System.ComponentModel.ISupportInitialize)splitContainerHoriz).BeginInit();
             splitContainerHoriz.Panel1.SuspendLayout();
             splitContainerHoriz.Panel2.SuspendLayout();
@@ -386,6 +388,8 @@
             // 
             // splitContainerVertChartBody.Panel1
             // 
+            splitContainerVertChartBody.Panel1.Controls.Add(textBoxRowLimit);
+            splitContainerVertChartBody.Panel1.Controls.Add(labelRowLimit);
             splitContainerVertChartBody.Panel1.Controls.Add(comboBoxChartType);
             splitContainerVertChartBody.Panel1.Controls.Add(labelChartType);
             splitContainerVertChartBody.Panel1.Controls.Add(comboBoxDataSourceView);
@@ -558,6 +562,23 @@
             statusStrip1.TabIndex = 2;
             statusStrip1.Text = "statusStrip1";
             // 
+            // textBoxRowLimit
+            // 
+            textBoxRowLimit.Location = new Point(7, 377);
+            textBoxRowLimit.Name = "textBoxRowLimit";
+            textBoxRowLimit.Size = new Size(236, 23);
+            textBoxRowLimit.TabIndex = 8;
+            textBoxRowLimit.Text = "1000";
+            // 
+            // labelRowLimit
+            // 
+            labelRowLimit.AutoSize = true;
+            labelRowLimit.Location = new Point(7, 359);
+            labelRowLimit.Name = "labelRowLimit";
+            labelRowLimit.Size = new Size(60, 15);
+            labelRowLimit.TabIndex = 9;
+            labelRowLimit.Text = "Row Limit";
+            // 
             // FormChart
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
@@ -654,5 +675,7 @@
         private ToolStripButton toolStripButtonFields;
         private ComboBox comboBoxChartType;
         private Label labelChartType;
+        private TextBox textBoxRowLimit;
+        private Label labelRowLimit;
     }
 }

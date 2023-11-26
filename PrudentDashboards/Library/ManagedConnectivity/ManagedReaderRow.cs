@@ -25,8 +25,8 @@ namespace Library.ManagedConnectivity
         public double AsDouble(string fieldName, double defaultValue) => (_nativeReader[fieldName] as double?) ?? defaultValue;
         public double? AsDouble(string fieldName) => _nativeReader[fieldName] as double?;
 
-        public string AsString(string fieldName, string defaultValue) => (_nativeReader[fieldName] as string) ?? defaultValue;
-        public string? AsString(string fieldName) => _nativeReader[fieldName] as string;
+        public string AsString(string fieldName, string defaultValue) => (_nativeReader[fieldName]?.ToString()) ?? defaultValue;
+        public string? AsString(string fieldName) => _nativeReader[fieldName]?.ToString();
 
         public IEnumerator<object> GetEnumerator()
         {
