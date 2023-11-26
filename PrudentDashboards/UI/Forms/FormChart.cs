@@ -158,10 +158,15 @@ namespace UI
             }
 
 #if DEBUG
+            _chartType = ChartType.Line;
+            comboBoxChartType.Text = chart.ChartType.ToString();
+
             //listViewSeries.Items.Add("Region");
-            //listViewSeries.Items.Add("Country");
-            listViewAxis.Items.Add("Region");
-            listViewAxis.Items.Add("Country");
+            listViewSeries.Items.Add("Country");
+
+            listViewAxis.Items.Add("OrderYear");
+            listViewAxis.Items.Add("OrderMonth");
+
             listViewValue.Items.Add("TotalDue");
 #endif
         }
@@ -244,7 +249,7 @@ namespace UI
 
             if (sqlGroupFields.Length > 0)
             {
-                sqlText.AppendLine($"GROUP BY {sqlGroupFields}");
+                sqlText.AppendLine($" GROUP BY {sqlGroupFields}");
             }
 
             if (orderByFields.Length > 0)

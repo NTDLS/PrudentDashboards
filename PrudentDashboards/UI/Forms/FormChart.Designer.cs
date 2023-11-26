@@ -54,6 +54,8 @@
             labelValues = new Label();
             splitContainerVert = new SplitContainer();
             splitContainerVertChartBody = new SplitContainer();
+            textBoxRowLimit = new TextBox();
+            labelRowLimit = new Label();
             comboBoxChartType = new ComboBox();
             labelChartType = new Label();
             comboBoxDataSourceView = new ComboBox();
@@ -71,8 +73,6 @@
             toolStripButtonProperties = new ToolStripButton();
             toolStripButtonFields = new ToolStripButton();
             statusStrip1 = new StatusStrip();
-            textBoxRowLimit = new TextBox();
-            labelRowLimit = new Label();
             ((System.ComponentModel.ISupportInitialize)splitContainerHoriz).BeginInit();
             splitContainerHoriz.Panel1.SuspendLayout();
             splitContainerHoriz.Panel2.SuspendLayout();
@@ -407,6 +407,23 @@
             splitContainerVertChartBody.SplitterDistance = 250;
             splitContainerVertChartBody.TabIndex = 4;
             // 
+            // textBoxRowLimit
+            // 
+            textBoxRowLimit.Location = new Point(7, 377);
+            textBoxRowLimit.Name = "textBoxRowLimit";
+            textBoxRowLimit.Size = new Size(236, 23);
+            textBoxRowLimit.TabIndex = 8;
+            textBoxRowLimit.Text = "1000";
+            // 
+            // labelRowLimit
+            // 
+            labelRowLimit.AutoSize = true;
+            labelRowLimit.Location = new Point(7, 359);
+            labelRowLimit.Name = "labelRowLimit";
+            labelRowLimit.Size = new Size(60, 15);
+            labelRowLimit.TabIndex = 9;
+            labelRowLimit.Text = "Row Limit";
+            // 
             // comboBoxChartType
             // 
             comboBoxChartType.DropDownStyle = ComboBoxStyle.DropDownList;
@@ -561,23 +578,6 @@
             statusStrip1.Size = new Size(1027, 22);
             statusStrip1.TabIndex = 2;
             statusStrip1.Text = "statusStrip1";
-            // 
-            // textBoxRowLimit
-            // 
-            textBoxRowLimit.Location = new Point(7, 377);
-            textBoxRowLimit.Name = "textBoxRowLimit";
-            textBoxRowLimit.Size = new Size(236, 23);
-            textBoxRowLimit.TabIndex = 8;
-            textBoxRowLimit.Text = "1000";
-            // 
-            // labelRowLimit
-            // 
-            labelRowLimit.AutoSize = true;
-            labelRowLimit.Location = new Point(7, 359);
-            labelRowLimit.Name = "labelRowLimit";
-            labelRowLimit.Size = new Size(60, 15);
-            labelRowLimit.TabIndex = 9;
-            labelRowLimit.Text = "Row Limit";
             // 
             // FormChart
             // 
