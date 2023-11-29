@@ -1,6 +1,5 @@
 ﻿using Library;
-using OxyPlot;
-using OxyPlot.Series;
+
 
 namespace UI
 {
@@ -16,6 +15,7 @@ namespace UI
             return results;
         }
 
+        /*
         public static void AddSeriesDataPoint(ChartType chartType, Series series, double value, string seriesLabel)
         {
             if (chartType == ChartType.Bar)
@@ -67,5 +67,6 @@ namespace UI
                 throw new NotImplementedException();
             }
         }
+        */
     }
 }

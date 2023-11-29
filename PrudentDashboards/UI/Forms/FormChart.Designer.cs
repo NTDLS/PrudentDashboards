@@ -64,7 +64,7 @@
             textBoxName = new TextBox();
             labelName = new Label();
             textBoxDescription = new TextBox();
-            plotView = new OxyPlot.WindowsForms.PlotView();
+            formsPlot = new ScottPlot.FormsPlot();
             toolStripHeader = new ToolStrip();
             toolStripButtonSave = new ToolStripButton();
             toolStripSeparator1 = new ToolStripSeparator();
@@ -402,7 +402,7 @@
             // 
             // splitContainerVertChartBody.Panel2
             // 
-            splitContainerVertChartBody.Panel2.Controls.Add(plotView);
+            splitContainerVertChartBody.Panel2.Controls.Add(formsPlot);
             splitContainerVertChartBody.Size = new Size(691, 574);
             splitContainerVertChartBody.SplitterDistance = 250;
             splitContainerVertChartBody.TabIndex = 4;
@@ -493,18 +493,14 @@
             textBoxDescription.Size = new Size(236, 140);
             textBoxDescription.TabIndex = 1;
             // 
-            // plotView
+            // formsPlot
             // 
-            plotView.Dock = DockStyle.Fill;
-            plotView.Location = new Point(0, 0);
-            plotView.Name = "plotView";
-            plotView.PanCursor = Cursors.Hand;
-            plotView.Size = new Size(437, 574);
-            plotView.TabIndex = 3;
-            plotView.Text = "plotView";
-            plotView.ZoomHorizontalCursor = Cursors.SizeWE;
-            plotView.ZoomRectangleCursor = Cursors.SizeNWSE;
-            plotView.ZoomVerticalCursor = Cursors.SizeNS;
+            formsPlot.Dock = DockStyle.Fill;
+            formsPlot.Location = new Point(0, 0);
+            formsPlot.Margin = new Padding(4, 3, 4, 3);
+            formsPlot.Name = "formsPlot";
+            formsPlot.Size = new Size(437, 574);
+            formsPlot.TabIndex = 0;
             // 
             // toolStripHeader
             // 
@@ -650,7 +646,6 @@
         private TextBox textBoxName;
         private ComboBox comboBoxDataSourceView;
         private Label labelDatasource;
-        private OxyPlot.WindowsForms.PlotView plotView;
         private Panel panel5;
         private Panel panel3;
         private SplitContainer splitContainerHorzFieldSelction;
@@ -677,5 +672,6 @@
         private Label labelChartType;
         private TextBox textBoxRowLimit;
         private Label labelRowLimit;
+        private ScottPlot.FormsPlot formsPlot;
     }
 }

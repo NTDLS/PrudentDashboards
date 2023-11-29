@@ -1,4 +1,5 @@
 ﻿using System.Data.SqlClient;
+using System.Text;
 
 namespace Library.ManagedConnectivity
 {
@@ -21,6 +22,11 @@ namespace Library.ManagedConnectivity
         public ManagedReader ExecuteReader(string sqlText)
         {
             return new ManagedReader(sqlText, Connection);
+        }
+
+        public ManagedReader ExecuteReader(StringBuilder sqlText)
+        {
+            return new ManagedReader(sqlText.ToString(), Connection);
         }
 
         public void Dispose()

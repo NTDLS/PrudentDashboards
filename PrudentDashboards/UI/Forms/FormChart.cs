@@ -1,9 +1,7 @@
 ﻿using Library;
-using Library.ManagedConnectivity;
 using Library.Models;
-using OxyPlot;
-using OxyPlot.Series;
-using System.Text;
+using ScottPlot;
+using ScottPlot.WinForms;
 using UI.Classes;
 
 namespace UI
@@ -175,6 +173,38 @@ namespace UI
 
         private void RefreshChart()
         {
+            var plot = formsPlot.Plot;
+
+            plot.Clear();
+
+            Random random = new Random();
+
+
+            List<double> values = new();
+            List<double> positions = new();
+            //List<string> labels = new();
+
+            for (int i = 0; i < 1000; i++)
+            {
+                positions.Add(i);
+                values.Add(random.Next(10, 1000));
+                //labels.Add(Guid.NewGuid().ToString().Substring(0, 10));
+            }
+
+
+            plot.XAxis.ManualTickPositions(new double[] { 0, 100, 200, 300 }, new string[] { "Jan", "Mar", "May", "Jul" });
+
+
+            plot.AddBar(values.ToArray(), positions.ToArray());
+            //plot.XTicks(positions.ToArray(), labels.ToArray());
+            //plot.SetAxisLimits(yMin: 0);
+
+            formsPlot.Render();
+        }
+
+        /*
+        private void RefreshChart_old()
+        {
             if (_dataSourceView == null)
             {
                 return;
@@ -219,13 +249,13 @@ namespace UI
             StringBuilder sqlSelectFields = new();
             foreach (var valueField in valueFields)
             {
-                sqlSelectFields.Append($"SUM(dq.[{valueField}]) as [{valueField}],");
+                sqlSelectFields.Append($"SUM(dq.[{valueField}]) as [Value_{valueField}],");
             }
 
             StringBuilder sqlGroupFields = new();
             foreach (var seriesField in seriesFields)
             {
-                sqlSelectFields.Append($"dq.[{seriesField}] as [{seriesField}],");
+                sqlSelectFields.Append($"dq.[{seriesField}] as [Series_{seriesField}],");
                 sqlGroupFields.Append($"dq.[{seriesField}],");
             }
 
@@ -233,7 +263,7 @@ namespace UI
 
             foreach (var axisField in axisFields)
             {
-                sqlSelectFields.Append($"dq.[{axisField}] as [{axisField}],");
+                sqlSelectFields.Append($"dq.[{axisField}] as [Axis_{axisField}],");
                 sqlGroupFields.Append($"dq.[{axisField}],");
                 orderByFields.Append($"dq.[{axisField}],");
             }
@@ -245,8 +275,9 @@ namespace UI
                 orderByFields.Length -= 1; //Kill the trailing comma.
             }
 
-            var sqlText = new StringBuilder($"SELECT TOP {rowLimit} {sqlSelectFields} FROM ({_dataSourceView.SQLText}) as dq");
+            using var connection = new ManagedConnection(dataSource.GetSqlServerConnectionString());
 
+            var sqlText = new StringBuilder($"SELECT TOP {rowLimit} {sqlSelectFields} FROM ({_dataSourceView.SQLText}) as dq");
             if (sqlGroupFields.Length > 0)
             {
                 sqlText.AppendLine($" GROUP BY {sqlGroupFields}");
@@ -257,8 +288,30 @@ namespace UI
                 sqlText.AppendLine($" ORDER BY {orderByFields}");
             }
 
-            using var connection = new ManagedConnection(dataSource.GetSqlServerConnectionString());
-            using var reader = connection.ExecuteReader(sqlText.ToString());
+            HashSet<string> seriesLables = new();
+
+            var distinctLabelValuesSqlText = new StringBuilder($"SELECT DISTINCT {sqlGroupFields} FROM ({_dataSourceView.SQLText}) as dq ORDER BY {sqlGroupFields}");
+            {
+                using var distinctReader = connection.ExecuteReader(distinctLabelValuesSqlText);
+                foreach (var row in distinctReader)
+                {
+                    string label = string.Empty;
+
+                    for (int i = 0; i < seriesFields.Count; i++)
+                    {
+                        label += $"[{row.AsString(seriesFields[i], "")}]";
+                        if (i < seriesFields.Count - 1) label += '-';
+
+                    }
+
+                    seriesLables.Add(label);
+
+                }
+            }
+
+            HashSet<string> majorLables = new();
+
+            using var reader = connection.ExecuteReader(sqlText);
             foreach (var row in reader)
             {
                 string axisLabelText = string.Empty;
@@ -268,29 +321,24 @@ namespace UI
                 //Build a series label and cache-key;
                 for (int i = 0; i < seriesFields.Count; i++)
                 {
-                    seriesLabelText += $"[{row.AsString(seriesFields[i], "")}]";
+                    seriesLabelText += $"[{row.AsString($"Series_{seriesFields[i]}", "")}]";
                     if (i < seriesFields.Count - 1) seriesLabelText += '-';
 
-                    seriesCacheKey += $"[{row.AsString(seriesFields[i], "")}]";
+                    seriesCacheKey += $"[{row.AsString($"Series_{seriesFields[i]}", "")}]";
                     if (i < seriesFields.Count - 1) seriesCacheKey += '-';
                 }
 
                 //Build a series label and cache-key;
                 for (int i = 0; i < axisFields.Count; i++)
                 {
-                    axisLabelText += $"[{row.AsString(axisFields[i], "")}]";
+                    axisLabelText += $"[{row.AsString($"Axis_{axisFields[i]}", "")}]";
                     if (i < axisFields.Count - 1) axisLabelText += '-';
 
                     //seriesCacheKey += $"[{row.AsString(axisFields[i], "")}]";
                     //if (i < axisFields.Count - 1) seriesCacheKey += '-';
                 }
 
-                /*
-                if (_chartType == ChartType.Pie)
-                {
-                    seriesCacheKey = "SinglePieSeries"; //Piecharts can only have one series.
-                }
-                */
+                majorLables.Add(axisLabelText);
 
                 if (seriesCache.TryGetValue(seriesCacheKey, out var cachedSeries) == false)
                 {
@@ -300,10 +348,42 @@ namespace UI
 
                 foreach (var valueField in valueFields)
                 {
-                    var seriesValue = row.AsDecimal(valueField, 0);
+                    var seriesValue = row.AsDecimal($"Value_{valueField}", 0);
                     ChartHelpers.AddSeriesDataPoint(_chartType, cachedSeries, (double)seriesValue, axisLabelText);
                 }
             }
+
+            // Create a LinearAxis for the X-axis (horizontal)
+            var xAxis = new LinearAxis
+            {
+                Position = AxisPosition.Bottom,
+                Title = "X-Axis Title",
+                MinimumPadding = 0, // Optional: Adjust padding if needed
+                MaximumPadding = 0,
+            };
+
+            // Add the Y-axis and X-axis to the plot model
+            plotModel.Axes.Add(xAxis);
+
+            // Create a custom X-axis with labels
+            var xaxis = new CategoryAxis
+            {
+                Position = AxisPosition.Bottom,
+                Title = "X-Axis Title",
+                MajorStep = 100, // Set the step between major ticks
+                MajorTickSize = 1, // Hide major tick marks
+                Angle = 45, // Rotate labels by 45 degrees
+            };
+
+            // Add custom labels to the X-axis
+            foreach (var majorLabel in majorLables)
+            {
+                xaxis.Labels.Add(majorLabel);
+            }
+            // Add the X-axis to the plot model
+            plotModel.Axes.Add(xaxis);
+
+            // Add the X-axis to the plot model
 
             foreach (var series in seriesCache)
             {
@@ -312,6 +392,7 @@ namespace UI
 
             plotView.Model = plotModel;
         }
+        */
 
         private void ToolStripButtonRefresh_Click(object sender, EventArgs e)
         {
